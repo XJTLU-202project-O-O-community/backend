@@ -7,14 +7,14 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app01', '0001_initial'),
+        ('user', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='user_personal_info',
             fields=[
-                ('id', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='app01.register_info')),
+                ('id', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='user.register_info')),
                 ('photo', models.ImageField(default='default.jpg', height_field=300, upload_to='photo', width_field=300)),
                 ('username', models.CharField(max_length=32)),
                 ('actual_name', models.CharField(default='', max_length=32)),
