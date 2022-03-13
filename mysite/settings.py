@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
-    'fans'
+    'fans',
+    'posting'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
 
         'USER': 'root',
 
-        'PASSWORD': '',
+        'PASSWORD': '8888',
 
         'HOST': '127.0.0.1',
 
@@ -136,3 +137,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 图片储存根路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'user/photo')
+# 图片访问url
+MEDIA_URL = '/IMG/'

@@ -15,10 +15,10 @@ class UserAccount(models.Model):
 
 class User(models.Model):
     id = models.OneToOneField("user.UserAccount", on_delete=models.CASCADE, primary_key=True)
-    photo = models.ImageField(upload_to="photo/", default='photo/default.jpg')
-    username = models.CharField(max_length=32)
+    photo = models.ImageField(upload_to="photo", default='photo/default.jpg', null=True)
+    username = models.CharField(max_length=32, null=False)
     actual_name = models.CharField(max_length=32, null=True)
     gender = models.CharField(max_length=2, null=True)
     birth = models.DateField(null=True)
-    signature = models.CharField(max_length=64, default="这个人很神秘，什么都没写")
+    signature = models.CharField(max_length=64, default="这个人很神秘，什么都没写", null=True)
 
