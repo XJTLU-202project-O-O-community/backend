@@ -9,6 +9,8 @@ from django.db import models
 class UserAccount(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=32)
+
+    #存入的密码经过md5加密（前端去加密）
     password = models.CharField(max_length=32)
     email = models.EmailField()
 
