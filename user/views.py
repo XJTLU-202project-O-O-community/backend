@@ -1,5 +1,7 @@
 import json
+import os.path
 
+from django.conf import settings
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
@@ -51,6 +53,8 @@ def register(request):
                 }
             return JsonResponse(result, status=err_code)
         except Exception as e:
+            if UserAccount.objects.filter(username=username) is not None:
+                UserAccount.objects.filter(username=username).delete()
             err_code = 500
             result = {
                 "err_code": err_code,
@@ -127,42 +131,53 @@ def personal_page(request):
 @require_http_methods(["POST"])
 def edit(request):
     #利用old_username获取数据库中信息
-    old_username = request.POST.get("old_username")
-    old_info = User.objects.get(username=old_username)
-    new_username = request.POST.get("new_username")
-    #修改用户名
-    if new_username is not None:
-        old_info.username = new_username
-    #修改头像
-    if len(request.FILES) != 0:
-        photo = request.FILES['photo']
-        old_info.photo = photo
-    actual_name = request.POST.get('actual_name')
-    #修改真实姓名
-    if actual_name is not None:
-        old_info.actual_name = actual_name
-    gender = request.POST.get('gender')
-    #修改性别
-    if gender is not None:
-        old_info.gender = gender
-    birth = request.POST.get('birth')
-    #修改生日
-    if birth is not None:
+    try:
+        old_username = request.POST.get("old_username")
+        old_info = User.objects.get(username=old_username)
+        new_username = request.POST.get("new_username")
+        #修改用户名
+        if new_username is not None:
+            old_info.username = new_username
+            username = new_username
+        username = old_username
+        #修改头像
+        if len(request.FILES) != 0:
+            photo = request.FILES['photo']
+            old_info.photo = photo
+        actual_name = request.POST.get('actual_name')
+        #修改真实姓名
+        if actual_name is not None:
+            old_info.actual_name = actual_name
+        gender = request.POST.get('gender')
+        #修改性别
+        if gender is not None:
+            old_info.gender = gender
         birth = request.POST.get('birth')
-        old_info.birth = birth
-    #修改个签
-    signature = request.POST.get('signature')
-    old_info.signature = signature
-    old_info.save()
-    #发回修改后信息
-    personal_info = serializers.serialize('json', User.objects.filter(username=new_username))
-    err_code = 200
-    result = {
-        'err_code': err_code,
-        "data": json.loads(personal_info),
-    }
+        #修改生日
+        if birth is not None:
+            birth = request.POST.get('birth')
+            old_info.birth = birth
+        #修改个签
+        signature = request.POST.get('signature')
+        old_info.signature = signature
+        old_info.save()
+        #发回修改后信息
+        personal_info = serializers.serialize('json', User.objects.filter(username=username))
+        err_code = 200
+        result = {
+            'err_code': err_code,
+            "msg": "modify success",
+            "data": json.loads(personal_info),
+        }
 
-    return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=err_code)
+    except Exception as e:
+        err_code = 500
+        result={
+            'err_code': err_code,
+            "msg": str(e)
+        }
+        return JsonResponse(result,status=err_code)
 
 
 @require_http_methods(["POST"])
@@ -191,15 +206,12 @@ def change_pwd(request):
 
 @require_http_methods(["POST"])
 def photo_upload(request):
-    if len(request.FILES) != 0:
-        file = request.FILES['photo']
-        file_data = file.read()
-        result = {
-            "data": file.name
-        }
-        return JsonResponse(result, status=200)
-    else:
-        result = {
-            "data": "a",
-        }
-        return JsonResponse(result, status=200)
+    username = request.POST.get("username")
+    url = User.objects.get(username=username).photo.url
+    file = open("./" + url, 'rb')
+    with open("try.jpg", 'wb') as f:
+        f.write(file.read())
+    response = HttpResponse("a")
+    return HttpResponse("a")
+
+

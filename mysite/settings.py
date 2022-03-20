@@ -137,7 +137,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 图片储存根路径
-MEDIA_ROOT = os.path.join(BASE_DIR, 'user/photo')
-# 图片访问url
-MEDIA_URL = '/IMG/'
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'client_header').replace('\\', '/')
+#MEDIA_URL = '/client_header/'
+MEDIA_URL = '/client_header/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'client_header')
