@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
-    'fans'
+    'fans',
+    'posting'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
 
         'USER': 'root',
 
-        'PASSWORD': '',
+        'PASSWORD': '8888',
 
         'HOST': '127.0.0.1',
 
