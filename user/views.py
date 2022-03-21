@@ -80,6 +80,7 @@ def login(request):
                 result = {
                     "error_code": err_code,
                     "msg": 'Login Successfully',
+                    "id" : account.id,
                     "username": username
                 }
             #不匹配

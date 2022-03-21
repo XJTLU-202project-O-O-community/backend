@@ -85,7 +85,7 @@ DATABASES = {
 
         'USER': 'root',
 
-        'PASSWORD': '8888',
+        'PASSWORD': '',
 
         'HOST': '127.0.0.1',
 
@@ -139,7 +139,6 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'client_header').replace('\\', '/')
-#MEDIA_URL = '/client_header/'
-MEDIA_URL = '/client_header/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'client_header')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -17,7 +17,7 @@ class UserAccount(models.Model):
 
 class User(models.Model):
     id = models.OneToOneField("user.UserAccount", on_delete=models.CASCADE, primary_key=True)
-    photo = models.ImageField(upload_to="client_header", default='client_header/default.jpg', null=False)
+    photo = models.ImageField(upload_to="photo/", default='photo/default.jpg', null=False)
     username = models.CharField(max_length=32, null=False)
     actual_name = models.CharField(max_length=32, null=True)
     gender = models.CharField(max_length=2, null=True)

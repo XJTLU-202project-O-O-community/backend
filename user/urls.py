@@ -3,7 +3,6 @@ from django.urls import path
 from mysite import settings
 from . import views
 from django.views.static import serve
-from django.conf.urls.static import static
 app_name = 'user'
 
 urlpatterns = [
@@ -19,5 +18,4 @@ urlpatterns = [
     path('change_pwd/', views.change_pwd),
     #修改个人信息页面
     path('personal_info_edit/', views.edit),
-    path(r'^client_header/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
