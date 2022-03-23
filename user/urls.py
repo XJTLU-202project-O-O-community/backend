@@ -4,16 +4,16 @@ from . import views
 app_name = 'user'
 
 urlpatterns = [
-    #注册页面
+    # 注册页面
     path('register/', views.register),
-    #登陆页面
+    # 登陆页面
     path('login/', views.login),
-    #个人信息页面
+    # 个人信息页面
     path('personal_info/', views.personal_page),
-    #这个是用来测试的，别管
+    # 这个是用来测试的，别管
     path('upload_photo/', views.photo_upload),
-    #修改密码页面
+    # 修改密码页面
     path('change_pwd/', views.change_pwd),
-    #修改个人信息页面
+    # 修改个人信息页面
     path('personal_info_edit', views.edit)
 ]
