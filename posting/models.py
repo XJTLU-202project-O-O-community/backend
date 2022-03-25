@@ -23,4 +23,4 @@ class imgs(models.Model):
     moments = models.ForeignKey(to='moments_info',on_delete=models.CASCADE)
 
 
-# Create your models here.
+

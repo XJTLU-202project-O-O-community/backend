@@ -7,10 +7,10 @@ from user.models import User
 from .models import Following
 
 # Create your views here.
-'''
-【GET】返回 用户关注的人 的列表
-【POST】关注用户
-'''
+
+#【GET】返回 用户关注的人 的列表
+#【POST】关注用户
+
 @require_http_methods(["GET", "POST"])
 def following(request):
     if request.method == 'GET':
@@ -59,9 +59,9 @@ def following(request):
         return JsonResponse(result, status=400)
 
 
-'''
-【POST】取消关注 
-'''
+
+#【POST】取消关注
+
 @require_http_methods(["POST"])
 def following_delete(request):
     user_id = request.POST.get("user_id")
@@ -97,9 +97,9 @@ def following_delete(request):
         return JsonResponse(result, status=500)
 
 
-'''
-【GET】返回粉丝列表
-'''
+
+#【GET】返回粉丝列表
+
 @require_http_methods(["GET"])
 def fans(request):
     user_id = request.GET.get("user_id")
@@ -125,9 +125,9 @@ def fans(request):
         return JsonResponse(result, status=500)
 
 
-'''
-【GET】关键词搜索关注的人
-'''
+
+#【GET】关键词搜索关注的人
+
 @require_http_methods(["GET"])
 def search(request):
     user_id = request.GET.get("user_id")
