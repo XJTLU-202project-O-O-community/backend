@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'user',
     'fans',
     'chat',
-    'channels'
+    'channels',
+    'posting',
 ]
 
 MIDDLEWARE = [
