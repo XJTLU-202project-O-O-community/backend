@@ -6,10 +6,15 @@ from chat.models import MessageList, MessageModel
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.target_user_id = None
+        self.room_name = None
+
     async def connect(self):
         user_id = self.scope['url_route']['kwargs']['user_id']
         self.room_name = "{}".format(user_id)
-
+        print("【CONNECT】---", self.room_name)
         # Join room group
         await self.channel_layer.group_add(
             self.room_name,
@@ -35,12 +40,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         }
         '''
         text_data_json = json.loads(text_data)
-        print(text_data_json)
+        print("【RECEIVE MESSAGE】", text_data_json)
         user_id = text_data_json['user_id']
         recipient_id = text_data_json['recipient_id']
         message = text_data_json['message'].strip()
+        has_read = True if self.target_user_id == user_id else False
 
-        msg = await self.saveMsg(user_id=user_id, recipient_id=recipient_id, message=message)
+        msg = await self.saveMsg(user_id=user_id, recipient_id=recipient_id, message=message, has_read=has_read)
 
         notification = {
             'user_id': msg.room.user_id,
@@ -49,10 +55,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "message": msg.message,
             "createdAt": msg.createdAt.strftime('%Y-%m-%d %H:%M:%S'),
         }
-
         # Send message to room group
         await self.channel_layer.group_send(
-            "{}".format(msg.room.user_id),
+            "{}".format(msg.room.recipient_id),
             {
                 'type': 'chat_message',
                 'message': notification
@@ -61,13 +66,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from room group
     async def chat_message(self, event):
-        print(event, 888888)
+        print("【SEND MESSAGE】", event)
         # Send message to WebSocket
         await self.send(text_data=json.dumps(event['message']))
 
     @database_sync_to_async
-    def saveMsg(self, user_id=None, recipient_id=None, message=None):
+    def saveMsg(self, user_id=None, recipient_id=None, message=None, has_read=None):
         room = MessageList.objects.get_or_create(user_id=user_id, recipient_id=recipient_id)[0]
-        msg = MessageModel.objects.create(room=room, message=message)
+        msg = MessageModel.objects.create(room=room, message=message, hasRead=has_read)
         msg.save()
+        print("【SAVE MESSAGE】", msg)
         return msg
+
+    async def change_target(self, event):
+        print("【CHANGE TARGET】", event)
+        self.target_user_id = event['target_user_id']
