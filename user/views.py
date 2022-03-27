@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
-from user.models import UserAccount, User, UserProfile
+from user.models import UserProfile
 
 
 # Create your views here.

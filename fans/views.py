@@ -1,29 +1,32 @@
-import json
-from django.core import serializers
-from django.db.models import Q
+from django.db.models import Q, F, Max
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from user.models import User
+from user.models import UserProfile
 from .models import Following
+
 
 # Create your views here.
 
-#【GET】返回 用户关注的人 的列表
-#【POST】关注用户
-
+# 【GET】返回 用户关注的人 的列表
+# 【POST】关注用户
 @require_http_methods(["GET", "POST"])
 def following(request):
     if request.method == 'GET':
         user_id = request.GET.get("user_id")
         following_ids = Following.objects.filter(user_id=user_id).order_by("created_time").values("following_id")
-        followings_info = User.objects.filter(id__in=[x['following_id'] for x in list(following_ids)])
-        followings_info = serializers.serialize("json", followings_info)
+        followings_info = []
+        for x in following_ids:
+            info = UserProfile.objects.filter(id=x['following_id']) \
+                .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
+                .values("username", "email", "photo", "actual_name", "gender", "birth",
+                        "signature", "id", "moment")[0]
+            followings_info.append(info)
         result = {
             "error_code": 200,
             "msg": "success",
             "data": {
                 "user_id": user_id,
-                "following_list": json.loads(followings_info)
+                "following_list": followings_info
             }
         }
         return JsonResponse(result, status=200)
@@ -59,9 +62,7 @@ def following(request):
         return JsonResponse(result, status=400)
 
 
-
-#【POST】取消关注
-
+# 【POST】取消关注
 @require_http_methods(["POST"])
 def following_delete(request):
     user_id = request.POST.get("user_id")
@@ -97,22 +98,24 @@ def following_delete(request):
         return JsonResponse(result, status=500)
 
 
-
-#【GET】返回粉丝列表
-
+# 【GET】返回粉丝列表
 @require_http_methods(["GET"])
 def fans(request):
     user_id = request.GET.get("user_id")
     try:
         fan_ids = Following.objects.filter(following_id=user_id).order_by('created_time').values('user_id')
-        fans_info = User.objects.filter(id__in=[x['user_id'] for x in list(fan_ids)])
-        fans_info = serializers.serialize("json", fans_info)
+        fans_info = []
+        for x in fan_ids:
+            info = UserProfile.objects.filter(id=x['user_id']) \
+                .annotate(username=F('name'), moment=F('moments_info__content')).order_by('-moments_info__ctime') \
+                .values("username", "email", "photo", "actual_name", "gender", "birth", "signature", "id", "moment")[0]
+            fans_info.append(info)
         result = {
             "error_code": 200,
             "msg": "success",
             "data": {
                 "user_id": user_id,
-                "fans_list": json.loads(fans_info)
+                "fans_list": fans_info
             }
         }
         return JsonResponse(result, status=200)
@@ -125,9 +128,7 @@ def fans(request):
         return JsonResponse(result, status=500)
 
 
-
-#【GET】关键词搜索关注的人
-
+# 【GET】关键词搜索关注的人
 @require_http_methods(["GET"])
 def search(request):
     user_id = request.GET.get("user_id")
@@ -141,15 +142,22 @@ def search(request):
         return JsonResponse(result, status=403)
     else:
         try:
-            following_ids = Following.objects.filter(Q(user_id=user_id) & Q(following_id__username__contains=keyword)).order_by('created_time').values("following_id")
-            followings_info = User.objects.filter(id__in=[x['following_id'] for x in list(following_ids)])
-            followings_info = serializers.serialize("json", followings_info)
+            following_ids = Following.objects.filter(
+                Q(user_id=user_id) & Q(following_id__name__contains=keyword)).order_by('created_time')\
+                .values("following_id")
+            followings_info = []
+            for x in following_ids:
+                info = UserProfile.objects.filter(id=x['following_id']) \
+                    .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
+                    .values("username", "email", "photo", "actual_name", "gender", "birth",
+                            "signature", "id", "moment")[0]
+                followings_info.append(info)
             result = {
                 "error_code": 200,
                 "msg": "success",
                 "data": {
                     "user_id": user_id,
-                    "following_list": json.loads(followings_info)
+                    "following_list": followings_info
                 }
             }
             return JsonResponse(result, status=200)
