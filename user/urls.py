@@ -15,7 +15,7 @@ urlpatterns = [
     #个人信息页面
     path('currentUser/', views.personal_page),
     #这个是用来测试的，别管
-    path('get_photo/', views.photo_upload),
+    #path('get_photo/', views.photo_upload),
     #修改密码页面
     path('change_pwd/', views.change_pwd),
     #修改个人信息页面

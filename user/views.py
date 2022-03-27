@@ -28,17 +28,17 @@ def inlog(request):
 @login_required
 def outlog(request):
     if request.method == 'GET':
-        username = request.user.username
-        person = UserProfile.objects.get(name=username)
+        username = request.user.name
+        person = UserProfile.objects.filter(name=username)
         person_info = serializers.serialize("json", person)
         err_code = 200
         result = {
             "err_code": err_code,
-            "msg": "this is " + username + " personal page",
+            "msg": username + " logout successfully",
             "data": json.loads(person_info)
         }
         logout(request)
-        return JsonResponse(result, err_code)
+        return JsonResponse(result, status=err_code)
 
 
 @require_http_methods(["POST"])
@@ -70,11 +70,12 @@ def regist(request):
 @login_required
 def personal_page(request):
     if request.method == "GET":
-        username = request.user.username
+        username = request.GET.get("username")
         try:
             err_code = 200
             # 从数据库中获取数据
-            person = UserProfile.objects.get(name=username)
+            #username = request.user.name
+            person = UserProfile.objects.filter(name=username)
             person_info = serializers.serialize("json", person)
             result = {
                 "err_code": err_code,
@@ -83,6 +84,7 @@ def personal_page(request):
             }
             return JsonResponse(result, status=err_code)
         except Exception as e:
+            print(e)
             err_code = 500
             result = {
                 "err_code": err_code,
@@ -92,6 +94,7 @@ def personal_page(request):
 
 
 @require_http_methods(["POST"])
+@login_required
 def edit(request):
     # 利用old_username获取数据库中信息
     try:
@@ -127,7 +130,7 @@ def edit(request):
         old_info.signature = signature
         old_info.save()
         # 发回修改后信息
-        personal_info = serializers.serialize('json', UserProfile.objects.get(name=username))
+        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
         result = {
             'err_code': err_code,
@@ -148,13 +151,13 @@ def edit(request):
 @require_http_methods(["POST"])
 @login_required
 def change_pwd(request):
-    username = request.user.username
+    username = request.user.name
     old_password = request.POST.get("old_password")
     new_password = request.POST.get("new_password")
     # 核对旧密码
     if request.user.check_password(old_password):
         request.user.set_password(new_password)
-        personal_info = serializers.serialize('json', UserProfile.objects.get(name=username))
+        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
         result = {
             'err_code': err_code,
@@ -172,7 +175,7 @@ def change_pwd(request):
         return JsonResponse(res, status=err_code)
 
 
-@require_http_methods(["POST"])
+'''@require_http_methods(["POST"])
 def photo_upload(request):
     username = request.POST.get("username")
     url = User.objects.get(username=username).photo.url
@@ -180,4 +183,4 @@ def photo_upload(request):
     with open("try.jpg", 'wb') as f:
         f.write(file.read())
     response = HttpResponse("a")
-    return HttpResponse("a")
+    return HttpResponse("a")'''
