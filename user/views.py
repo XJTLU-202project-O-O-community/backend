@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
+from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 from user.models import UserProfile
 
@@ -16,12 +17,25 @@ def inlog(request):
     user = authenticate(username=email, password=password)  # 验证用户名和密码，返回用户对象
     if user:  # 如果用户对象存在
         login(request, user)  # 用户登陆
-
-        return HttpResponse("成功")
+        person = UserProfile.objects.filter(name=user.name)
+        person_info = serializers.serialize("json", person)
+        err_code = 200
+        result = {
+            "err_code": err_code,
+            "msg": person[0].name + " login successfully",
+            "data": json.loads(person_info)
+        }
+        request.user.last_login = timezone.now()
+        return JsonResponse(result, status=err_code)
 
     else:
-
-        return HttpResponse("邮箱或密码错误")
+        err_code = 400
+        result = {
+            "err_code":err_code,
+            "msg": "邮箱或密码错误",
+            "email": email,
+        }
+        return JsonResponse(result,status=err_code)
 
 
 @require_http_methods(["GET"])
@@ -61,7 +75,7 @@ def regist(request):
         print(e)
         result = {
             "err_code" : err_code,
-            "msg": "e",
+            "msg": str(e),
         }
         return JsonResponse(result, status=err_code)
 
@@ -99,7 +113,7 @@ def edit(request):
     # 利用old_username获取数据库中信息
     try:
 
-        old_username = request.POST.get("old_username")
+        old_username = request.user.name
         old_info = UserProfile.objects.get(name=old_username)
         new_username = request.POST.get("new_username")
         # 修改用户名

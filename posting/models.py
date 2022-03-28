@@ -23,5 +23,7 @@ class comments(models.Model):
 
 
 class imgs(models.Model):
-    url = models.CharField(max_length=64, default="")
+    url = models.CharField(max_length=64, default="/media/logo")
     moments = models.ForeignKey(to='moments_info', on_delete=models.CASCADE)
+
+
