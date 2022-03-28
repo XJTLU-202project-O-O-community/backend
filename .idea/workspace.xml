@@ -2,55 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb4f0f12-05ec-471e-a4f8-05e028b32149" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/mysql.osA4Bg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/oo_community.SmA2NA.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/sys.zb4BAA.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/consumers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/migrations/0002_messagemodel_hasread.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/routing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/posting/migrations/0002_auto_20220325_1740.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mysite.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/IMG_20190717_220804.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/IMG_20190717_220804_bhsIyE8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/IMG_20190717_220804_xdDVW7J.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/client_header/IMG_20190822_154424.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/IMG_20201225_143917.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/IMG_20201225_143917_dtJvJnr.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/migrations/0002_alter_userprofile_name.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0002_alter_user_username.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0003_auto_20220324_1626.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0004_rename_name_userprofile_username.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0005_rename_username_userprofile_name.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -149,6 +106,8 @@
       <workItem from="1648174750404" duration="21108000" />
       <workItem from="1648200182692" duration="8341000" />
       <workItem from="1648383991961" duration="18000" />
+      <workItem from="1648384020429" duration="291000" />
+      <workItem from="1648427529387" duration="4007000" />
     </task>
     <servers />
   </component>
