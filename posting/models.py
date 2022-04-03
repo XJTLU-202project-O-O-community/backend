@@ -8,6 +8,7 @@ class moments_info(models.Model):
     thumbs = models.SmallIntegerField(null=True, default=0)
     likes = models.SmallIntegerField(null=True, default=0)
 
+
     class Meta:
         ordering = ('-ctime',)
 

@@ -1,11 +1,24 @@
 from django.shortcuts import render
 import json
 from django.core import serializers
-from django.db.models import Q
+from django.db.models import Q,Count,Sum,Aggregate,CharField
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 
 from .models import *
+
+class Concat(Aggregate):
+    """ORM用来分组显示其他字段 相当于group_concat"""
+    function = 'GROUP_CONCAT'
+    template = '%(function)s(%(distinct)s%(expressions)s)'
+
+    def __init__(self, expression, distinct=False, **extra):
+        super(Concat, self).__init__(
+            expression,
+            distinct='DISTINCT ' if distinct else '',
+            output_field=CharField(),
+            **extra)
+
 
 '''
 get 返回所有动态
@@ -14,7 +27,7 @@ get 返回所有动态
 def get_posts(request):
     if request.method == 'GET':
         try:
-            content = moments_info.objects.values('id', 'content', 'thumbs', 'user_id__name','user_id__photo','imgs__url').order_by('ctime')
+            content = moments_info.objects.values('id', 'content', 'thumbs', 'user_id__name','user_id__photo').annotate(url=Concat('imgs__url')).order_by('ctime')
             content = list(content)
             result = {
                 'error_code': 200,
@@ -67,10 +80,11 @@ def single_post(request):
     if request.method == 'GET':
         try:
             user = request.GET.get('user')
-            content = moments_info.objects.filter(user_id=user).values('id',
-                                                                       'content', 'thumbs', 'user_id__name',
-                                                                       'user_id__photo','imgs__url') \
-                .order_by('ctime')
+            imglist = list(imgs.objects.values('url','moments'))
+            content = moments_info.objects.filter(user_id=user).values('id','content', 'thumbs', 'user_id__name',
+                                                                       'user_id__photo',
+                                                                     ).annotate(url=Concat('imgs__url')).order_by('ctime')
+
             result = {
                 'error_code': 200,
                 'msg': 'successfully get personal moments',
