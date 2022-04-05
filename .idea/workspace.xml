@@ -2,48 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb4f0f12-05ec-471e-a4f8-05e028b32149" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/chat/migrations/0002_messagemodel_hasread.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/posting/migrations/0002_auto_20220325_1740.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fans/migrations/0002_auto_20220405_1849.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/consumers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/migrations/0002_auto_20220324_1655.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/templates/chat/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/templates/chat/room.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/IMG_20190717_220804.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/IMG_20190717_220804_bhsIyE8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/IMG_20190717_220804_xdDVW7J.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/client_header/IMG_20190822_154424.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_header/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/migrations/0002_alter_following_id.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fans/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/migrations/0002_auto_20220324_1336.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0002_auto_20220323_2223.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0012_alter_user_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/migrations/0012_alter_user_photo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -64,7 +46,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../.." />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.stylelint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.stylelint" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager" selected="Python.views">
     <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -132,6 +120,14 @@
       <workItem from="1648174466431" duration="9000" />
       <workItem from="1648174750404" duration="21108000" />
       <workItem from="1648200182692" duration="8341000" />
+      <workItem from="1648295293879" duration="359000" />
+      <workItem from="1648319293731" duration="434000" />
+      <workItem from="1648432220692" duration="1236000" />
+      <workItem from="1648433774568" duration="14000" />
+      <workItem from="1648467783959" duration="51000" />
+      <workItem from="1648468172632" duration="21000" />
+      <workItem from="1648519059795" duration="633000" />
+      <workItem from="1649155109666" duration="824000" />
     </task>
     <servers />
   </component>

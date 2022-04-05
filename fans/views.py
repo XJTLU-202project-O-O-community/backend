@@ -13,10 +13,10 @@ from .models import Following
 def following(request):
     if request.method == 'GET':
         user_id = request.GET.get("user_id")
-        following_ids = Following.objects.filter(user_id=user_id).order_by("created_time").values("following_id")
+        following_ids = Following.objects.filter(user_id=user_id).order_by("created_time").values("following")
         followings_info = []
         for x in following_ids:
-            info = UserProfile.objects.filter(id=x['following_id']) \
+            info = UserProfile.objects.filter(id=x['following']) \
                 .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
                 .values("username", "email", "photo", "actual_name", "gender", "birth",
                         "signature", "id", "moment")[0]
@@ -34,7 +34,7 @@ def following(request):
         user_id = request.POST.get("user_id")
         following_id = request.POST.get("following_id")
         try:
-            obj, isCreated = Following.objects.get_or_create(user_id_id=user_id, following_id_id=following_id)
+            obj, isCreated = Following.objects.get_or_create(user_id=user_id, following_id=following_id)
             if isCreated:
                 result = {
                     "error_code": 200,
@@ -103,10 +103,10 @@ def following_delete(request):
 def fans(request):
     user_id = request.GET.get("user_id")
     try:
-        fan_ids = Following.objects.filter(following_id=user_id).order_by('created_time').values('user_id')
+        fan_ids = Following.objects.filter(following_id=user_id).order_by('created_time').values('user')
         fans_info = []
         for x in fan_ids:
-            info = UserProfile.objects.filter(id=x['user_id']) \
+            info = UserProfile.objects.filter(id=x['user']) \
                 .annotate(username=F('name'), moment=F('moments_info__content')).order_by('-moments_info__ctime') \
                 .values("username", "email", "photo", "actual_name", "gender", "birth", "signature", "id", "moment")[0]
             fans_info.append(info)
@@ -144,7 +144,7 @@ def search(request):
         try:
             following_ids = Following.objects.filter(
                 Q(user_id=user_id) & Q(following_id__name__contains=keyword)).order_by('created_time')\
-                .values("following_id")
+                .values("following")
             followings_info = []
             for x in following_ids:
                 info = UserProfile.objects.filter(id=x['following_id']) \
