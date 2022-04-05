@@ -6,6 +6,8 @@ app_name = 'posting'
 
 urlpatterns = [
     path('momments/', views.get_posts),
-    path('momment/', views.single_post),
+    path('moment/', views.single_post),
+    path('delete/', views.delete),
+    path('edit/', views.edit),
 
 ]

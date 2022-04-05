@@ -43,7 +43,7 @@ class UserProfile(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32,unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     photo = models.ImageField(upload_to="photo/", default='photo/default.jpg', null=False)

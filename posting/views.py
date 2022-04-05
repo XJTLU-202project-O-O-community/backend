@@ -1,11 +1,24 @@
 from django.shortcuts import render
 import json
 from django.core import serializers
-from django.db.models import Q
+from django.db.models import Q,Count,Sum,Aggregate,CharField
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 
 from .models import *
+
+class Concat(Aggregate):
+    """ORM用来分组显示其他字段 相当于group_concat"""
+    function = 'GROUP_CONCAT'
+    template = '%(function)s(%(distinct)s%(expressions)s)'
+
+    def __init__(self, expression, distinct=False, **extra):
+        super(Concat, self).__init__(
+            expression,
+            distinct='DISTINCT ' if distinct else '',
+            output_field=CharField(),
+            **extra)
+
 
 '''
 get 返回所有动态
@@ -14,7 +27,7 @@ get 返回所有动态
 def get_posts(request):
     if request.method == 'GET':
         try:
-            content = moments_info.objects.values('id', 'content', 'thumbs', 'user_id__username','user_id__photo').order_by('ctime')
+            content = moments_info.objects.values('id', 'content', 'thumbs', 'user_id__name','user_id__photo').annotate(url=Concat('imgs__url')).order_by('ctime')
             content = list(content)
             result = {
                 'error_code': 200,
@@ -45,7 +58,12 @@ def single_post(request):
         try:
             user_id = request.POST.get('user_id')
             content = request.POST.get('content')
-            moments_info.objects.create(user_id_id=user_id, content=content, thumbs=0, likes=0)
+            imgList = request.POST.get('imgs')
+            moments = moments_info.objects.create(user_id_id=user_id, content=content, thumbs=0, likes=0)
+            if imgList!=None:
+                imgList = imgList.split(',')
+                for i in range(len(imgList)):
+                    imgs.objects.create(url=imgList[i], moments_id=moments.id)
             result={
                 'error_code': 200,
                 'msg':'moments created successfully',
@@ -61,9 +79,12 @@ def single_post(request):
 
     if request.method == 'GET':
         try:
-            user = request.GET.get('user_id')
-            content = moments_info.objects.filter(user_id=user).values('id', 'content', 'thumbs', 'user_id__username') \
-                .order_by('ctime')
+            user = request.GET.get('user')
+            imglist = list(imgs.objects.values('url','moments'))
+            content = moments_info.objects.filter(user_id=user).values('id','content', 'thumbs', 'user_id__name',
+                                                                       'user_id__photo',
+                                                                     ).annotate(url=Concat('imgs__url')).order_by('ctime')
+
             result = {
                 'error_code': 200,
                 'msg': 'successfully get personal moments',
@@ -79,6 +100,53 @@ def single_post(request):
                 'msg': 'encounter problems',
             }
             return JsonResponse(result , status=500)
+
+@require_http_methods('POST')
+def delete(request):
+    try:
+        delete_id=request.POST.get('id')
+        moments_info.objects.filter(id=delete_id).delete()
+        result = {
+            'error_code': 200,
+            'msg': 'deleted successfully',
+        }
+        return JsonResponse(result, status=200)
+
+    except Exception as e:
+        print(e)
+        result = {
+            'error_code': 500,
+            'msg': 'encounter problems',
+        }
+        return JsonResponse(result, status=500)
+
+@require_http_methods('POST')
+def edit(request):
+    try:
+        edit_id=request.POST.get('id')
+        edit_content=request.POST.get('content')
+        #imgs=requ
+        moments_info.objects.filter(id=edit_id).update(content=edit_content)
+        data= moments_info.objects.filter(id=edit_id).values('id', 'content')
+        result = {
+            'error_code': 200,
+            'msg': 'successfully edit moments',
+            'data': {
+                'own_moments': list(data)
+            }
+        }
+        return JsonResponse(result, status=200)
+    except Exception as e:
+        print(e)
+        result = {
+            'error_code': 500,
+            'msg': 'counter problems',
+            }
+
+        return JsonResponse(result, status=500)
+
+
+
 
 
 

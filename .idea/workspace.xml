@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="cb4f0f12-05ec-471e-a4f8-05e028b32149" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/fans/migrations/0002_auto_20220405_1849.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/consumers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fans/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/views.py" afterDir="false" />
+=======
+    <list default="true" id="cb4f0f12-05ec-471e-a4f8-05e028b32149" name="Changes" comment="动态测试完成">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/views.py" afterDir="false" />
+>>>>>>> 91f2a54ab5800e66a3fc02d6001c1e77f2ed7752
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,6 +128,7 @@
       <workItem from="1648174466431" duration="9000" />
       <workItem from="1648174750404" duration="21108000" />
       <workItem from="1648200182692" duration="8341000" />
+<<<<<<< HEAD
       <workItem from="1648295293879" duration="359000" />
       <workItem from="1648319293731" duration="434000" />
       <workItem from="1648432220692" duration="1236000" />
@@ -128,6 +137,13 @@
       <workItem from="1648468172632" duration="21000" />
       <workItem from="1648519059795" duration="633000" />
       <workItem from="1649155109666" duration="824000" />
+=======
+      <workItem from="1648383991961" duration="18000" />
+      <workItem from="1648384020429" duration="291000" />
+      <workItem from="1648427529387" duration="4007000" />
+      <workItem from="1648966960971" duration="131000" />
+      <workItem from="1648967471270" duration="5800000" />
+>>>>>>> 91f2a54ab5800e66a3fc02d6001c1e77f2ed7752
     </task>
     <servers />
   </component>
