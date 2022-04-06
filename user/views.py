@@ -6,7 +6,7 @@ from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 from user.models import UserProfile
-
+from fans.models import Following
 
 # Create your views here.
 @require_http_methods(["POST"])
@@ -62,6 +62,8 @@ def regist(request):
         password = request.POST.get('password')
         email = request.POST.get("email")
         UserProfile.objects.create_user(name=username, password=password, email=email)
+        my_id = UserProfile.objects.get(name=username).id
+        Following.objects.create(following_id=my_id, user_id=my_id)
         person = UserProfile.objects.get(name=username)
         err_code = 200
         result = {
@@ -74,7 +76,7 @@ def regist(request):
         err_code = 400
         print(e)
         result = {
-            "err_code" : err_code,
+            "err_code": err_code,
             "msg": str(e),
         }
         return JsonResponse(result, status=err_code)
@@ -85,14 +87,22 @@ def regist(request):
 def personal_page(request):
     if request.method == "GET":
         username = request.GET.get("username")
+        his_id = UserProfile.objects.get(name=username).id
         try:
             err_code = 200
             # 从数据库中获取数据
-            #username = request.user.name
+            my_id = request.user.id
+            obj = Following.objects.filter(user_id=my_id)
+            is_friend = False
+            for each in obj:
+                if each.following_id == his_id:
+                    is_friend = True
+                    break
             person = UserProfile.objects.filter(name=username)
             person_info = serializers.serialize("json", person)
             result = {
                 "err_code": err_code,
+                "isFriend":is_friend,
                 "msg": "this is " + username + " personal page",
                 "data": json.loads(person_info)
             }
