@@ -22,7 +22,7 @@ def inlog(request):
         person_info = serializers.serialize("json", person)
         err_code = 200
         result = {
-            "err_code": err_code,
+            "error_code": err_code,
             "msg": person[0].name + " login successfully",
             "data": json.loads(person_info)
         }
@@ -32,7 +32,7 @@ def inlog(request):
     else:
         err_code = 400
         result = {
-            "err_code":err_code,
+            "error_code":err_code,
             "msg": "邮箱或密码错误",
             "email": email,
         }
@@ -48,7 +48,7 @@ def outlog(request):
         person_info = serializers.serialize("json", person)
         err_code = 200
         result = {
-            "err_code": err_code,
+            "error_code": err_code,
             "msg": person[0].name + " logout successfully",
             "data": json.loads(person_info)
         }
@@ -58,29 +58,23 @@ def outlog(request):
 
 @require_http_methods(["POST"])
 def regist(request):
-
     try:
+        print(request.POST)
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get("email")
         UserProfile.objects.create_user(name=username, password=password, email=email)
-        my_id = UserProfile.objects.get(name=username).id
-        Following.objects.create(following_id=my_id, user_id=my_id)
-        person = UserProfile.objects.get(name=username)
-        person_info = serializers.serialize("json", person)
         err_code = 200
         result = {
-            "err_code": err_code,
+            "error_code": err_code,
             "msg": "创建成功",
-            "username": person.name,
-            "data":json.loads(person_info)
         }
         return JsonResponse(result, status=200)
     except Exception as e:
         err_code = 400
         print(e)
         result = {
-            "err_code": err_code,
+            "error_code": err_code,
             "msg": str(e),
         }
         return JsonResponse(result, status=err_code)
@@ -106,7 +100,7 @@ def personal_page(request):
 
             his_json_info = serializers.serialize("json", his_info)
             result = {
-                "err_code": err_code,
+                "error_code": err_code,
                 "isFriend": is_friend,
                 "msg": "this is " + his_info[0].name + " personal page",
                 "data": json.loads(his_json_info)
@@ -115,7 +109,7 @@ def personal_page(request):
         except Exception as e:
             err_code = 500
             result = {
-                "err_code": err_code,
+                "error_code": err_code,
                 "msg": str(e)
             }
             return JsonResponse(result, status=err_code)
@@ -197,7 +191,7 @@ def change_pwd(request):
     else:
         err_code = 400
         res = {
-            "err_code": err_code,
+            "error_code": err_code,
             "msg": "修改失败，原密码不匹配",
         }
         return JsonResponse(res, status=err_code)
@@ -247,9 +241,13 @@ def search(request):
     except Exception as e:
         err_code = 400
         result = {
-            "err_code": err_code,
+            "error_code": err_code,
             "msg": str(e)
         }
         return JsonResponse(result, status=err_code)
 
+'''@login_required
+@require_http_methods(["GET"])
+def my_page(request):
+    my_id'''
 
