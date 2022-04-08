@@ -143,3 +143,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'user.UserProfile'
 LOGIN_URL = '/user/login/'
 
+'''# 设置邮件域名，一般为使用哪个邮箱，就有固定的域名，例如我使用的是网易的163邮箱
+EMAIL_HOST = 'smtp.qq.com'
+# 设置端口号，为数字，网易的默认端口是25
+EMAIL_PORT = 465
+#设置发件人邮箱
+EMAIL_HOST_USER = '1076627773@qq.com'
+# 设置发件人 授权码
+EMAIL_HOST_PASSWORD = 'fkzagikokuffghha'
+# 设置是否启用安全链接
+EMAIL_USER_TLS = True'''
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False   #是否使用TLS安全传输协议(用于在两个通信应用程序之间提供保密性和数据完整性。)
+EMAIL_USE_SSL = True    #是否使用SSL加密，qq企业邮箱要求使用
+EMAIL_HOST = 'smtp.qq.com'   #发送邮件的邮箱 的 SMTP服务器，这里用了163邮箱
+EMAIL_PORT = 465     #发件箱的SMTP服务器端口
+EMAIL_HOST_USER = '1076627773@qq.com'    #发送邮件的邮箱地址
+EMAIL_HOST_PASSWORD = 'fkzagikokuffghha'         #发送邮件的邮箱密码(这里使用的是授权码)
