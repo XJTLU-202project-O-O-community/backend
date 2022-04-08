@@ -1222,222 +1222,220 @@ recipient_id</ColNames>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="335" parent="290" name="chat_messagemodel_room_id_1e292165_fk_chat_messagelist_id">
+    <column id="335" parent="290" name="hasRead">
+      <DataType>tinyint(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="336" parent="290" name="chat_messagemodel_room_id_1e292165_fk_chat_messagelist_id">
       <ColNames>room_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>chat_messagelist</RefTableName>
     </foreign-key>
-    <index id="336" parent="290" name="chat_messagemodel_createdAt_1a2ff405">
+    <index id="337" parent="290" name="chat_messagemodel_createdAt_1a2ff405">
       <ColNames>createdAt</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="337" parent="290" name="chat_messagemodel_room_id_1e292165_fk_chat_messagelist_id">
+    <index id="338" parent="290" name="chat_messagemodel_room_id_1e292165_fk_chat_messagelist_id">
       <ColNames>room_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="338" parent="290" name="PRIMARY">
+    <key id="339" parent="290" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <check id="339" parent="291" name="django_admin_log_chk_1">
+    <check id="340" parent="291" name="django_admin_log_chk_1">
       <NameSurrogate>1</NameSurrogate>
       <Predicate>`action_flag` &gt;= 0</Predicate>
     </check>
-    <column id="340" parent="291" name="id">
+    <column id="341" parent="291" name="id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="341" parent="291" name="action_time">
+    <column id="342" parent="291" name="action_time">
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="342" parent="291" name="object_id">
+    <column id="343" parent="291" name="object_id">
       <DataType>longtext|0s</DataType>
       <Position>3</Position>
     </column>
-    <column id="343" parent="291" name="object_repr">
+    <column id="344" parent="291" name="object_repr">
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="344" parent="291" name="action_flag">
+    <column id="345" parent="291" name="action_flag">
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="345" parent="291" name="change_message">
+    <column id="346" parent="291" name="change_message">
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="346" parent="291" name="content_type_id">
+    <column id="347" parent="291" name="content_type_id">
       <DataType>int|0s</DataType>
       <Position>7</Position>
     </column>
-    <column id="347" parent="291" name="user_id">
+    <column id="348" parent="291" name="user_id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <foreign-key id="348" parent="291" name="django_admin_log_content_type_id_c4bce8eb_fk_django_co">
+    <foreign-key id="349" parent="291" name="django_admin_log_content_type_id_c4bce8eb_fk_django_co">
       <ColNames>content_type_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>django_content_type</RefTableName>
     </foreign-key>
-    <foreign-key id="349" parent="291" name="django_admin_log_user_id_c564eba6_fk_user_userprofile_id">
+    <foreign-key id="350" parent="291" name="django_admin_log_user_id_c564eba6_fk_user_userprofile_id">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>user_userprofile</RefTableName>
     </foreign-key>
-    <index id="350" parent="291" name="django_admin_log_content_type_id_c4bce8eb_fk_django_co">
+    <index id="351" parent="291" name="django_admin_log_content_type_id_c4bce8eb_fk_django_co">
       <ColNames>content_type_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="351" parent="291" name="django_admin_log_user_id_c564eba6_fk_user_userprofile_id">
+    <index id="352" parent="291" name="django_admin_log_user_id_c564eba6_fk_user_userprofile_id">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="352" parent="291" name="PRIMARY">
+    <key id="353" parent="291" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="353" parent="292" name="id">
+    <column id="354" parent="292" name="id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="354" parent="292" name="app_label">
+    <column id="355" parent="292" name="app_label">
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="355" parent="292" name="model">
+    <column id="356" parent="292" name="model">
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <index id="356" parent="292" name="django_content_type_app_label_model_76bd3d3b_uniq">
+    <index id="357" parent="292" name="django_content_type_app_label_model_76bd3d3b_uniq">
       <ColNames>app_label
 model</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="357" parent="292" name="PRIMARY">
+    <key id="358" parent="292" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <key id="358" parent="292" name="django_content_type_app_label_model_76bd3d3b_uniq">
+    <key id="359" parent="292" name="django_content_type_app_label_model_76bd3d3b_uniq">
       <ColNames>app_label
 model</ColNames>
       <UnderlyingIndexName>django_content_type_app_label_model_76bd3d3b_uniq</UnderlyingIndexName>
     </key>
-    <column id="359" parent="293" name="id">
+    <column id="360" parent="293" name="id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="360" parent="293" name="app">
+    <column id="361" parent="293" name="app">
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="361" parent="293" name="name">
+    <column id="362" parent="293" name="name">
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="362" parent="293" name="applied">
+    <column id="363" parent="293" name="applied">
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <key id="363" parent="293" name="PRIMARY">
+    <key id="364" parent="293" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="364" parent="294" name="session_key">
+    <column id="365" parent="294" name="session_key">
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="365" parent="294" name="session_data">
+    <column id="366" parent="294" name="session_data">
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="366" parent="294" name="expire_date">
+    <column id="367" parent="294" name="expire_date">
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <index id="367" parent="294" name="django_session_expire_date_a5c62663">
+    <index id="368" parent="294" name="django_session_expire_date_a5c62663">
       <ColNames>expire_date</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="368" parent="294" name="PRIMARY">
+    <key id="369" parent="294" name="PRIMARY">
       <ColNames>session_key</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="369" parent="295" name="id">
+    <column id="370" parent="295" name="id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="370" parent="295" name="created_time">
+    <column id="371" parent="295" name="created_time">
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="371" parent="295" name="following_id_id">
+    <column id="372" parent="295" name="following_id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="372" parent="295" name="user_id_id">
+    <column id="373" parent="295" name="user_id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="373" parent="295" name="fans_following_following_id_id_89b9a6f6_fk_user_userprofile_id">
-      <ColNames>following_id_id</ColNames>
+    <foreign-key id="374" parent="295" name="fans_following_following_id_5837d742_fk_user_userprofile_id">
+      <ColNames>following_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>user_userprofile</RefTableName>
     </foreign-key>
-    <foreign-key id="374" parent="295" name="fans_following_user_id_id_a6816570_fk_user_userprofile_id">
-      <ColNames>user_id_id</ColNames>
+    <foreign-key id="375" parent="295" name="fans_following_user_id_1d2eee01_fk_user_userprofile_id">
+      <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>user_userprofile</RefTableName>
     </foreign-key>
-    <index id="375" parent="295" name="fans_following_user_id_id_following_id_id_c49fb9bd_uniq">
-      <ColNames>user_id_id
-following_id_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="376" parent="295" name="fans_following_following_id_id_89b9a6f6_fk_user_userprofile_id">
-      <ColNames>following_id_id</ColNames>
+    <index id="376" parent="295" name="fans_following_following_id_5837d742_fk_user_userprofile_id">
+      <ColNames>following_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="377" parent="295" name="PRIMARY">
+    <index id="377" parent="295" name="fans_following_user_id_1d2eee01_fk_user_userprofile_id">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="378" parent="295" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
-    </key>
-    <key id="378" parent="295" name="fans_following_user_id_id_following_id_id_c49fb9bd_uniq">
-      <ColNames>user_id_id
-following_id_id</ColNames>
-      <UnderlyingIndexName>fans_following_user_id_id_following_id_id_c49fb9bd_uniq</UnderlyingIndexName>
     </key>
     <column id="379" parent="296" name="id">
       <DataType>bigint|0s</DataType>
