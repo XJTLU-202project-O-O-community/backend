@@ -9,5 +9,6 @@ urlpatterns = [
     path('moment/', views.single_post),
     path('delete/', views.delete),
     path('edit/', views.edit),
+    path('imgs/', views.img_uploader)
 
 ]

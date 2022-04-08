@@ -9,10 +9,12 @@
       <change beforePath="$PROJECT_DIR$/fans/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/views.py" afterDir="false" />
 =======
-    <list default="true" id="cb4f0f12-05ec-471e-a4f8-05e028b32149" name="Changes" comment="动态测试完成">
+    <list default="true" id="cb4f0f12-05ec-471e-a4f8-05e028b32149" name="Changes" comment="图片完成">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posting/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/posting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/views.py" afterDir="false" />
 >>>>>>> 91f2a54ab5800e66a3fc02d6001c1e77f2ed7752
     </list>
@@ -142,9 +144,20 @@
       <workItem from="1648384020429" duration="291000" />
       <workItem from="1648427529387" duration="4007000" />
       <workItem from="1648966960971" duration="131000" />
-      <workItem from="1648967471270" duration="5800000" />
+      <workItem from="1648967471270" duration="8448000" />
+      <workItem from="1649073609907" duration="3166000" />
+      <workItem from="1649149152097" duration="2776000" />
+      <workItem from="1649238660855" duration="17004000" />
 >>>>>>> 91f2a54ab5800e66a3fc02d6001c1e77f2ed7752
     </task>
+    <task id="LOCAL-00001" summary="图片完成">
+      <created>1648973507217</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1648973507217</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +176,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="动态测试完成" />
+    <MESSAGE value="动态图片完成" />
+    <MESSAGE value="图片完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="图片完成" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/backend$views.coverage" NAME="views Coverage Results" MODIFIED="1648104158733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/chat" />
