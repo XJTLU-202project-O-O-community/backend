@@ -85,11 +85,11 @@ def regist(request):
 def personal_page(request):
     if request.method == "GET":
         his_id = request.GET.get("his_id")
+        print("abcde")
         print(his_id)
-        print(type(his_id))
         try:
             err_code = 200
-            if his_id is not None:
+            if his_id != "undefined":
                 his_info = UserProfile.objects.filter(id=his_id)
                 print(his_info)
                 my_id = request.user.id
@@ -97,7 +97,7 @@ def personal_page(request):
                 is_friend = False
                 for each in obj:
                     if str(each.following_id) == his_id:
-                        print("a")
+                        print("T")
                         is_friend = True
                         break
                 his_json_info = serializers.serialize("json", his_info)
@@ -109,9 +109,9 @@ def personal_page(request):
 
             result = {
                 "error_code": err_code,
-                "isFriend": is_friend,
                 "msg": "this is " + his_info[0].name + " personal page",
-                "data": json.loads(his_json_info)
+                "isFriend": is_friend,
+                "data": json.loads(his_json_info),
             }
             return JsonResponse(result, status=err_code)
         except Exception as e:
