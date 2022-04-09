@@ -85,20 +85,28 @@ def regist(request):
 def personal_page(request):
     if request.method == "GET":
         his_id = request.GET.get("his_id")
+        print(his_id)
+        print(type(his_id))
         try:
-            his_info = UserProfile.objects.filter(id=his_id)
             err_code = 200
+            if his_id is not None:
+                his_info = UserProfile.objects.filter(id=his_id)
+                print(his_info)
+                my_id = request.user.id
+                obj = Following.objects.filter(user_id=my_id)
+                is_friend = False
+                for each in obj:
+                    if str(each.following_id) == his_id:
+                        print("a")
+                        is_friend = True
+                        break
+                his_json_info = serializers.serialize("json", his_info)
+            else:
+                his_id = request.user.id
+                his_info = UserProfile.objects.filter(id=his_id)
+                is_friend = True
+                his_json_info = serializers.serialize("json", his_info)
 
-            my_id = request.user.id
-            obj = Following.objects.filter(user_id=my_id)
-            is_friend = False
-            for each in obj:
-                if str(each.following_id) == his_id:
-                    print("a")
-                    is_friend = True
-                    break
-
-            his_json_info = serializers.serialize("json", his_info)
             result = {
                 "error_code": err_code,
                 "isFriend": is_friend,
