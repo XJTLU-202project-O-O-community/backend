@@ -32,7 +32,7 @@ def get_posts(request):
         try:
             content = moments_info.objects.values('id', 'user_id', 'content', 'thumbs', 'likes', 'user_id__name',
                                                   'user_id__photo', 'user_id__signature').annotate(
-                url=Concat('imgs__url')).order_by('ctime')
+                url=Concat('imgs__url')).order_by('-ctime')
             content = list(content)
             result = {
                 'error_code': 200,
@@ -91,7 +91,7 @@ def single_post(request):
             content = moments_info.objects.filter(user_id=user).values('id', 'content', 'thumbs', 'user_id__name',
                                                                        'user_id__photo',
                                                                        ).annotate(url=Concat('imgs__url')).order_by(
-                'ctime')
+                '-ctime')
 
             result = {
                 'error_code': 200,
@@ -114,6 +114,7 @@ def single_post(request):
 def delete(request):
     try:
         delete_id = request.POST.get('id')
+        print(delete_id,99999)
         moments_info.objects.filter(id=delete_id).delete()
         result = {
             'error_code': 200,
@@ -160,7 +161,7 @@ def img_uploader(request):
     try:
         img = request.FILES['file']
         print(img.name)
-        f=open('D:\\media\\'+img.name,'wb+')
+        f=open('./media/moments/'+img.name,'wb+')
         f.write(img.read())
         f.close()
         res = {
