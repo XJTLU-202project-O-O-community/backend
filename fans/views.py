@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Q, F, Max
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -31,8 +33,9 @@ def following(request):
         }
         return JsonResponse(result, status=200)
     elif request.method == 'POST':
-        user_id = request.POST.get("user_id")
-        following_id = request.POST.get("following_id")
+        request_body = json.loads(request.body)
+        user_id = request_body.get("user_id")
+        following_id = request_body.get("following_id")
         try:
             obj, isCreated = Following.objects.get_or_create(user_id=user_id, following_id=following_id)
             if isCreated:
@@ -102,6 +105,7 @@ def following_delete(request):
 @require_http_methods(["GET"])
 def fans(request):
     user_id = request.GET.get("user_id")
+    print(user_id)
     try:
         fan_ids = Following.objects.filter(following_id=user_id).order_by('created_time').values('user')
         fans_info = []
@@ -135,19 +139,31 @@ def search(request):
     keyword = request.GET.get('keyword')
 
     if keyword == "":
+        following_ids = Following.objects.filter(user_id=user_id).order_by("created_time").values("following")
+        followings_info = []
+        for x in following_ids:
+            info = UserProfile.objects.filter(id=x['following']) \
+                .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
+                .values("username", "email", "photo", "actual_name", "gender", "birth",
+                        "signature", "id", "moment")[0]
+            followings_info.append(info)
         result = {
-            "error_code": 403,
-            "msg": 'empty keyword',
+            "error_code": 200,
+            "msg": "success",
+            "data": {
+                "user_id": user_id,
+                "following_list": followings_info
+            }
         }
-        return JsonResponse(result, status=403)
+        return JsonResponse(result, status=200)
     else:
         try:
             following_ids = Following.objects.filter(
-                Q(user_id=user_id) & Q(following_id__name__contains=keyword)).order_by('created_time')\
+                Q(user_id=user_id) & Q(following__name__contains=keyword)).order_by('created_time')\
                 .values("following")
             followings_info = []
             for x in following_ids:
-                info = UserProfile.objects.filter(id=x['following_id']) \
+                info = UserProfile.objects.filter(id=x['following']) \
                     .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
                     .values("username", "email", "photo", "actual_name", "gender", "birth",
                             "signature", "id", "moment")[0]
@@ -161,7 +177,7 @@ def search(request):
                 }
             }
             return JsonResponse(result, status=200)
-        except Exception as e:
+        except ArithmeticError as e:
             print(e)
             result = {
                 "error_code": 500,

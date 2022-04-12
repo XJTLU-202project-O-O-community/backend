@@ -65,20 +65,18 @@ def regist(request):
         password = request.POST.get('password')
         email = request.POST.get("email")
         UserProfile.objects.create_user(name=username, password=password, email=email)
-        err_code = 200
         result = {
-            "error_code": err_code,
+            "error_code": 200,
             "msg": "创建成功",
         }
         return JsonResponse(result, status=200)
     except Exception as e:
-        err_code = 400
         print(e)
         result = {
-            "error_code": err_code,
+            "error_code": 400,
             "msg": str(e),
         }
-        return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=400)
 
 
 @require_http_methods(["GET"])
