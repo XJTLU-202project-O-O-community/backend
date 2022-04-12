@@ -9,6 +9,7 @@ from django.views.decorators.http import require_http_methods
 from user.models import UserProfile
 from fans.models import Following
 
+
 # Create your views here.
 @require_http_methods(["POST"])
 def inlog(request):
@@ -32,11 +33,11 @@ def inlog(request):
     else:
         err_code = 400
         result = {
-            "error_code":err_code,
+            "error_code": err_code,
             "msg": "邮箱或密码错误",
             "email": email,
         }
-        return JsonResponse(result,status=err_code)
+        return JsonResponse(result, status=err_code)
 
 
 @require_http_methods(["GET"])
@@ -85,14 +86,14 @@ def regist(request):
 def personal_page(request):
     if request.method == "GET":
         his_id = request.GET.get("his_id")
+        my_id = request.user.id
         print("abcde")
         print(his_id)
         try:
             err_code = 200
-            if his_id != "undefined":
+            if his_id != my_id:
                 his_info = UserProfile.objects.filter(id=his_id)
                 print(his_info)
-                my_id = request.user.id
                 obj = Following.objects.filter(user_id=my_id)
                 is_friend = False
                 for each in obj:
@@ -127,55 +128,70 @@ def personal_page(request):
 @login_required
 def edit(request):
     # 利用old_username获取数据库中信息
-    try:
+    # try:
+    print("修改")
+    print(request.POST)
+    old_username = request.user.name
+    old_info = UserProfile.objects.get(name=old_username)
 
-        old_username = request.user.name
-        old_info = UserProfile.objects.get(name=old_username)
-        new_username = request.POST.get("new_username")
-        # 修改用户名
-        if new_username is not None:
-            old_info.name = new_username
-            username = new_username
-        else:
-            username = old_username
-        # 修改头像
-        if len(request.FILES) != 0:
-            photo = request.FILES['photo']
-            old_info.photo = photo
-        actual_name = request.POST.get('actual_name')
-        # 修改真实姓名
-        if actual_name is not None:
-            old_info.actual_name = actual_name
-        gender = request.POST.get('gender')
-        # 修改性别
-        if gender is not None:
-            old_info.gender = gender
+    # 修改用户名
+    new_username = request.POST.get("new_username")
+    if new_username is not None:
+        old_info.name = new_username
+        username = new_username
+    else:
+        username = old_username
+    # 修改头像
+    photo_name = request.POST.get('photo')
+    if photo_name != '':
+        print(photo_name)
+        old_info.photo = "photo/"+ photo_name
+
+
+    # 修改真实姓名
+    actual_name = request.POST.get('actual_name')
+    if actual_name is not None:
+        old_info.actual_name = actual_name
+
+    # 修改性别
+    gender = request.POST.get('gender')
+    if gender != "undefined":
+        old_info.gender = gender
+
+    # 修改城市
+    city = request.POST.get('city')
+    if city is not None:
+        old_info.city = city
+
+    # 修改生日
+    birth = request.POST.get('birth')
+    if birth != "undefined":
         birth = request.POST.get('birth')
-        # 修改生日
-        if birth is not None:
-            birth = request.POST.get('birth')
-            old_info.birth = birth
-        # 修改个签
-        signature = request.POST.get('signature')
-        old_info.signature = signature
-        old_info.save()
-        # 发回修改后信息
-        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
-        err_code = 200
-        result = {
-            'err_code': err_code,
-            "msg": "modify success",
-            "data": json.loads(personal_info),
-        }
+        old_info.birth = birth
 
-        return JsonResponse(result, status=err_code)
-    except Exception as e:
+    # 修改个签
+    signature = request.POST.get('signature')
+    old_info.signature = signature
+    old_info.save()
+    # 发回修改后信息
+    personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
+    err_code = 200
+    result = {
+        'err_code': err_code,
+        "msg": "modify success",
+        "data": json.loads(personal_info),
+    }
+
+    return JsonResponse(result, status=err_code)
+
+
+'''    except Exception as e:
         err_code = 500
         result = {
             'err_code': err_code,
             "msg": str(e)
         }
-        return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=err_code)'''
 
 
 @require_http_methods(["POST"])
@@ -206,7 +222,7 @@ def change_pwd(request):
 
 
 def Email_Rand_Code(request):
-    email=request.POST.get('email')
+    email = request.POST.get('email')
     import random
     code_list = []
     for i in range(10):  # 0-9数字
@@ -222,7 +238,7 @@ def Email_Rand_Code(request):
     # try:
     # send_mail的参数分别是  邮件标题，邮件内容，发件箱(settings.py中设置过的那个)，收件箱列表(可以发送给多个人),失败静默(若发送失败，报错提示我们)
     res = send_mail('oo_community的验证码', verification_code, '1076627773@qq.com',
-              [email], fail_silently=False)
+                    [email], fail_silently=False)
     print(res)
     if res != 1:
         static = '验证码发送失败'
@@ -242,7 +258,7 @@ def search(request):
         err_code = 200
         result = {
             'err_code': err_code,
-            "msg": "这是"+username+"的信息",
+            "msg": "这是" + username + "的信息",
             "data": json.loads(his_info),
         }
         return JsonResponse(result, status=err_code)
@@ -254,8 +270,34 @@ def search(request):
         }
         return JsonResponse(result, status=err_code)
 
+
+@require_http_methods(["POST"])
+@login_required
+def img_uploader(request):
+
+    try:
+        img = request.FILES['file']
+        print(img)
+        print("gauiawhil")
+        f = open('./media/photo/' + img.name, 'wb+')
+        f.write(img.read())
+        print("写入数据")
+        f.close()
+        res = {
+            'code': 200,
+            'message': 'upload success'
+        }
+        return JsonResponse(res, status=200)
+    except Exception as e:
+        print(e)
+        res = {
+            'code': 500,
+            'message': 'Count problems'
+        }
+        return JsonResponse(res, status=500)
+
+
 '''@login_required
 @require_http_methods(["GET"])
 def my_page(request):
     my_id'''
-

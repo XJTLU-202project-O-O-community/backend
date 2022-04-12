@@ -21,6 +21,8 @@ urlpatterns = [
     path('change_pwd/', views.change_pwd),
     # 修改个人信息页面
     path('personal_info_edit/', views.edit),
+    #图片上传
+    path('images/', views.img_uploader),
     # 搜索用户
     path('search/', views.search),
 ]
