@@ -13,8 +13,10 @@ urlpatterns = [
     path('login/', views.inlog),
     # 登出页面
     path('logout/', views.outlog),
-    # 个人信息页面
+    # 他人信息页面
     path('currentUser/', views.personal_page),
+    #本人个人界面
+    path('my/', views.my_page),
     #这个是用来测试的，别管
     #path('email/', views.Email_Rand_Code),
     # 修改密码页面

@@ -87,32 +87,31 @@ def personal_page(request):
     if request.method == "GET":
         his_id = request.GET.get("his_id")
         my_id = request.user.id
-        print("abcde")
-        print(his_id)
         try:
             err_code = 200
             if his_id != my_id:
                 his_info = UserProfile.objects.filter(id=his_id)
                 print(his_info)
                 obj = Following.objects.filter(user_id=my_id)
-                is_friend = False
+                is_fan = False
                 for each in obj:
                     if str(each.following_id) == his_id:
                         print("T")
-                        is_friend = True
+                        is_fan = True
                         break
                 his_json_info = serializers.serialize("json", his_info)
             else:
                 his_id = request.user.id
                 his_info = UserProfile.objects.filter(id=his_id)
-                is_friend = True
+                is_fan = False
                 his_json_info = serializers.serialize("json", his_info)
 
             result = {
                 "error_code": err_code,
                 "msg": "this is " + his_info[0].name + " personal page",
-                "isFriend": is_friend,
-                "data": json.loads(his_json_info),
+                "data": {"isFan": is_fan,
+                         "personal_data": json.loads(his_json_info)
+                         }
             }
             return JsonResponse(result, status=err_code)
         except Exception as e:
@@ -124,74 +123,94 @@ def personal_page(request):
             return JsonResponse(result, status=err_code)
 
 
+@require_http_methods(["GET"])
+@login_required
+def my_page(request):
+    my_id = request.user.id
+    try:
+        my_info = UserProfile.objects.filter(id=my_id)
+        my_json_info = serializers.serialize("json", my_info)
+        err_code = 200
+        result = {
+            "error_code": err_code,
+            "msg": "this is " + my_info[0].name + " personal page",
+            "data": json.loads(my_json_info),
+        }
+        return JsonResponse(result, status=err_code)
+    except Exception as e:
+        err_code = 500
+        result = {
+            "error_code": err_code,
+            "msg": str(e)
+        }
+        return JsonResponse(result, status=err_code)
+
+
 @require_http_methods(["POST"])
 @login_required
 def edit(request):
     # 利用old_username获取数据库中信息
-    # try:
-    print("修改")
-    print(request.POST)
-    old_username = request.user.name
-    old_info = UserProfile.objects.get(name=old_username)
+    try:
 
-    # 修改用户名
-    new_username = request.POST.get("new_username")
-    if new_username is not None:
-        old_info.name = new_username
-        username = new_username
-    else:
-        username = old_username
-    # 修改头像
-    photo_name = request.POST.get('photo')
-    if photo_name != '':
-        print(photo_name)
-        old_info.photo = "photo/"+ photo_name
+        old_username = request.user.name
+        old_info = UserProfile.objects.get(name=old_username)
 
+        # 修改用户名
+        new_username = request.POST.get("new_username")
+        if new_username is not None:
+            old_info.name = new_username
+            username = new_username
+        else:
+            username = old_username
+        # 修改头像
+        photo_name = request.POST.get('photo')
+        if photo_name != '':
+            print(photo_name)
+            old_info.photo = "photo/" + photo_name
 
-    # 修改真实姓名
-    actual_name = request.POST.get('actual_name')
-    if actual_name is not None:
-        old_info.actual_name = actual_name
+        # 修改真实姓名
+        actual_name = request.POST.get('actual_name')
+        if actual_name is not None:
+            old_info.actual_name = actual_name
 
-    # 修改性别
-    gender = request.POST.get('gender')
-    if gender != "undefined":
-        old_info.gender = gender
+        # 修改性别
+        gender = request.POST.get('gender')
+        if gender != "undefined":
+            old_info.gender = gender
 
-    # 修改城市
-    city = request.POST.get('city')
-    if city is not None:
-        old_info.city = city
+        # 修改城市
+        city = request.POST.get('city')
+        if city is not None:
+            old_info.city = city
 
-    # 修改生日
-    birth = request.POST.get('birth')
-    if birth != "undefined":
+        # 修改生日
         birth = request.POST.get('birth')
-        old_info.birth = birth
+        if birth != "undefined":
+            birth = request.POST.get('birth')
+            old_info.birth = birth
 
-    # 修改个签
-    signature = request.POST.get('signature')
-    old_info.signature = signature
-    old_info.save()
-    # 发回修改后信息
-    personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
-    err_code = 200
-    result = {
-        'err_code': err_code,
-        "msg": "modify success",
-        "data": json.loads(personal_info),
-    }
+        # 修改个签
+        signature = request.POST.get('signature')
+        old_info.signature = signature
+        old_info.save()
+        # 发回修改后信息
+        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
+        err_code = 200
+        result = {
+            'err_code': err_code,
+            "msg": "modify success",
+            "data": json.loads(personal_info),
+        }
 
-    return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=err_code)
 
-
-'''    except Exception as e:
+    except Exception as e:
         err_code = 500
         result = {
             'err_code': err_code,
             "msg": str(e)
         }
-        return JsonResponse(result, status=err_code)'''
+        return JsonResponse(result, status=err_code)
 
 
 @require_http_methods(["POST"])
@@ -274,7 +293,6 @@ def search(request):
 @require_http_methods(["POST"])
 @login_required
 def img_uploader(request):
-
     try:
         img = request.FILES['file']
         print(img)
