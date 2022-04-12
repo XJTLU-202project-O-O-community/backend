@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50903808-1cae-4fd1-9ecc-b1fbbc0306d5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/oo_community.SmA2NA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fans/migrations/0001_initial.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,11 +18,16 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="27h4L0nfVzwCbAElHny1VzrPcMq" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -79,11 +70,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1649758926291</updated>
-      <workItem from="1649758929410" duration="2733000" />
+      <workItem from="1649758929410" duration="9980000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

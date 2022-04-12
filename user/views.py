@@ -9,6 +9,7 @@ from django.views.decorators.http import require_http_methods
 from user.models import UserProfile
 from fans.models import Following
 
+
 # Create your views here.
 @require_http_methods(["POST"])
 def inlog(request):
@@ -32,11 +33,11 @@ def inlog(request):
     else:
         err_code = 400
         result = {
-            "error_code":err_code,
+            "error_code": err_code,
             "msg": "邮箱或密码错误",
             "email": email,
         }
-        return JsonResponse(result,status=err_code)
+        return JsonResponse(result, status=err_code)
 
 
 @require_http_methods(["GET"])
@@ -85,11 +86,11 @@ def personal_page(request):
         his_id = request.GET.get("his_id")
         print("abcde")
         print(his_id)
+        print(type(his_id))
         try:
             err_code = 200
             if his_id != "undefined":
                 his_info = UserProfile.objects.filter(id=his_id)
-                print(his_info)
                 my_id = request.user.id
                 obj = Following.objects.filter(user_id=my_id)
                 is_friend = False
@@ -104,7 +105,6 @@ def personal_page(request):
                 his_info = UserProfile.objects.filter(id=his_id)
                 is_friend = True
                 his_json_info = serializers.serialize("json", his_info)
-
             result = {
                 "error_code": err_code,
                 "msg": "this is " + his_info[0].name + " personal page",
@@ -118,7 +118,7 @@ def personal_page(request):
                 "error_code": err_code,
                 "msg": str(e)
             }
-            return JsonResponse(result, status=err_code)
+            return JsonResponse(result)
 
 
 @require_http_methods(["POST"])
@@ -204,7 +204,7 @@ def change_pwd(request):
 
 
 def Email_Rand_Code(request):
-    email=request.POST.get('email')
+    email = request.POST.get('email')
     import random
     code_list = []
     for i in range(10):  # 0-9数字
@@ -220,7 +220,7 @@ def Email_Rand_Code(request):
     # try:
     # send_mail的参数分别是  邮件标题，邮件内容，发件箱(settings.py中设置过的那个)，收件箱列表(可以发送给多个人),失败静默(若发送失败，报错提示我们)
     res = send_mail('oo_community的验证码', verification_code, '1076627773@qq.com',
-              [email], fail_silently=False)
+                    [email], fail_silently=False)
     print(res)
     if res != 1:
         static = '验证码发送失败'
@@ -240,7 +240,7 @@ def search(request):
         err_code = 200
         result = {
             'err_code': err_code,
-            "msg": "这是"+username+"的信息",
+            "msg": "这是" + username + "的信息",
             "data": json.loads(his_info),
         }
         return JsonResponse(result, status=err_code)
@@ -252,8 +252,8 @@ def search(request):
         }
         return JsonResponse(result, status=err_code)
 
+
 '''@login_required
 @require_http_methods(["GET"])
 def my_page(request):
     my_id'''
-
