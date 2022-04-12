@@ -102,6 +102,7 @@ def following_delete(request):
 @require_http_methods(["GET"])
 def fans(request):
     user_id = request.GET.get("user_id")
+    print(user_id)
     try:
         fan_ids = Following.objects.filter(following_id=user_id).order_by('created_time').values('user')
         fans_info = []

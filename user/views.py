@@ -63,32 +63,19 @@ def regist(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get("email")
-<<<<<<< HEAD
-        p = UserProfile.objects.create_user(name=username, password=password, email=email)
-        person = UserProfile.objects.get(name=username)
-        person_info = serializers.serialize("json", person)
-=======
         UserProfile.objects.create_user(name=username, password=password, email=email)
->>>>>>> 9eadcc023ac077231bc0152daaaa162136b4d0d7
-        err_code = 200
         result = {
-            "error_code": err_code,
+            "error_code": 200,
             "msg": "创建成功",
-<<<<<<< HEAD
-            "username": person.name,
-            "data": json.loads(person_info)
-=======
->>>>>>> 9eadcc023ac077231bc0152daaaa162136b4d0d7
         }
         return JsonResponse(result, status=200)
-    except ArithmeticError as e:
-        err_code = 400
+    except Exception as e:
         print(e)
         result = {
-            "error_code": err_code,
+            "error_code": 400,
             "msg": str(e),
         }
-        return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=400)
 
 
 @require_http_methods(["GET"])
