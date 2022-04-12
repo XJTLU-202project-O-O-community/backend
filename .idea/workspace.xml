@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50903808-1cae-4fd1-9ecc-b1fbbc0306d5" name="Changes" comment="">
+    <list default="true" id="5e34487e-d918-4833-814d-39116b2b04ab" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/fans/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/moments/camera view.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/IMG_20190913_173033.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/camera view.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/camera view_LI.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/human eye.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/user.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/migrations/0002_userprofile_city.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97540412-a2ee-42a3-88b4-17bf4ed09349.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97540412-a2ee-42a3-88b4-17bf4ed09349/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97540412-a2ee-42a3-88b4-17bf4ed09349/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97540412-a2ee-42a3-88b4-17bf4ed09349/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97540412-a2ee-42a3-88b4-17bf4ed09349/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/consumers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
-    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -18,16 +41,12 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="27h4L0nfVzwCbAElHny1VzrPcMq" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="27hbMme5O7CvEmemYRK8sIejIWg" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -66,30 +85,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="50903808-1cae-4fd1-9ecc-b1fbbc0306d5" name="Changes" comment="" />
-      <created>1649758926291</created>
+      <changelist id="5e34487e-d918-4833-814d-39116b2b04ab" name="Changes" comment="" />
+      <created>1649775221537</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1649758926291</updated>
-      <workItem from="1649758929410" duration="10792000" />
+      <updated>1649775221537</updated>
+      <workItem from="1649775225115" duration="2559000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

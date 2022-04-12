@@ -49,7 +49,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         msg = await self.saveMsg(user_id=user_id, recipient_id=recipient_id, message=message, has_read=has_read)
 
         notification = {
-            'user_id': msg.room.user,
+            'user_id': msg.room.user_id,
             'recipient_id': msg.room.recipient_id,
             "id": msg.id,
             "message": msg.message,

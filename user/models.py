@@ -50,6 +50,7 @@ class UserProfile(AbstractBaseUser):
     actual_name = models.CharField(max_length=32, null=True)
     gender = models.CharField(max_length=2, null=True)
     birth = models.DateField(null=True)
+    city = models.CharField(max_length=32, null=True)
     signature = models.CharField(max_length=64, default="这个人很神秘，什么都没写", null=True)
     objects = MyUserManager()
 
