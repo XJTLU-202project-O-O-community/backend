@@ -1,4 +1,6 @@
 import json
+import time
+
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -8,9 +10,17 @@ from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 from user.models import UserProfile
 from fans.models import Following
+import hashlib
 
 
 # Create your views here.
+
+def encrypt(code):
+    h = hashlib.md5()
+    h.update(code.encode("utf-8"))
+    return h.hexdigest()
+
+
 @require_http_methods(["POST"])
 def inlog(request):
     email = request.POST.get("email")  # 获取用户名
@@ -40,6 +50,45 @@ def inlog(request):
         return JsonResponse(result, status=err_code)
 
 
+@require_http_methods(["POST"])
+def email_inlog(request):
+    email = request.POST.get("email")
+    code = request.POST.get("code")
+    verification = request.POST.get("given_verification")
+    try:
+        user = UserProfile.objects.get(email=email)
+        print(user)
+        if encrypt(verification) == code and user:
+            login(request, user)
+            person = UserProfile.objects.filter(name=user.name)
+            person_info = serializers.serialize("json", person)
+            err_code = 200
+            result = {
+                "error_code": err_code,
+                "msg": person[0].name + " login successfully",
+                "data": json.loads(person_info)
+            }
+            request.user.last_login = timezone.now()
+            return JsonResponse(result, status=err_code)
+        else:
+            err_code = 400
+            result = {
+                "error_code": err_code,
+                "msg": "邮箱或验证码错误",
+                "email": email,
+            }
+            return JsonResponse(result, status=err_code)
+
+    except Exception as e:
+        err_code = 400
+        result = {
+            "error_code": err_code,
+            "msg": str(e),
+            "email": email,
+        }
+        return JsonResponse(result, status=err_code)
+
+
 @require_http_methods(["GET"])
 @login_required
 def outlog(request):
@@ -64,19 +113,65 @@ def regist(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get("email")
-        UserProfile.objects.create_user(name=username, password=password, email=email)
-        result = {
-            "error_code": 200,
-            "msg": "创建成功",
-        }
-        return JsonResponse(result, status=200)
+        given_verification = request.POST.get("given_verification")
+        verification = request.POST.get("code")
+        if encrypt(given_verification) == verification:
+            UserProfile.objects.create_user(name=username, password=password, email=email)
+            err_code = 200
+            result = {
+                "error_code": err_code,
+                "msg": "创建成功",
+            }
+        else:
+            err_code = 400
+            result = {
+                "error_code": err_code,
+                "msg": "创建失败"
+            }
+        return JsonResponse(result, status=err_code)
     except Exception as e:
         print(e)
+        err_code = 500
         result = {
-            "error_code": 400,
+            "error_code": err_code,
             "msg": str(e),
         }
         return JsonResponse(result, status=400)
+
+
+@require_http_methods(["GET"])
+def send_code(request):
+    email = request.GET.get("email")
+    try:
+        code, static = Email_Rand_Code(email)
+        if static == 1:
+            err_code = 200
+            result = {
+                "error_code": err_code,
+                "msg": "验证码发送成功",
+                "data": {
+                    "code": encrypt(code),
+                    "start_time": time.time(),
+                }
+            }
+            request.session['verification'] = code
+            print(request.session['verification'])
+            return JsonResponse(result, status=err_code)
+        else:
+            err_code = 400
+            result = {
+                "error_code": err_code,
+                "msg": "验证码发送失败",
+            }
+            return JsonResponse(result, status=err_code)
+
+    except Exception as e:
+        err_code = 500
+        result = {
+            "error_code": err_code,
+            "msg": str(e)
+        }
+        return JsonResponse(result, status=err_code)
 
 
 @require_http_methods(["GET"])
@@ -215,10 +310,14 @@ def edit(request):
 @login_required
 def change_pwd(request):
     username = request.user.name
+    email = request.POST.get("email")
+    code = request.POST.get("code")
+    verification = request.POST.get("given_verification")
     old_password = request.POST.get("old_password")
     new_password = request.POST.get("new_password")
+
     # 核对旧密码
-    if request.user.check_password(old_password):
+    if request.user.check_password(old_password) and email == request.user.email and encrypt(verification) == code:
         request.user.set_password(new_password)
         personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
@@ -233,13 +332,12 @@ def change_pwd(request):
         err_code = 400
         res = {
             "error_code": err_code,
-            "msg": "修改失败，原密码不匹配",
+            "msg": "修改失败，原参数不匹配",
         }
         return JsonResponse(res, status=err_code)
 
 
-def Email_Rand_Code(request):
-    email = request.POST.get('email')
+def Email_Rand_Code(email):
     import random
     code_list = []
     for i in range(10):  # 0-9数字
@@ -250,20 +348,17 @@ def Email_Rand_Code(request):
         code_list.append(chr(i))
     myslice = random.sample(code_list, 6)  # 从list中随机获取6个元素，作为一个片断返回
     verification_code = ''.join(myslice)
-    # 将随机的验证存在session表中，方便进行验证
-    request.session['rand_code'] = verification_code
     # try:
     # send_mail的参数分别是  邮件标题，邮件内容，发件箱(settings.py中设置过的那个)，收件箱列表(可以发送给多个人),失败静默(若发送失败，报错提示我们)
     res = send_mail('oo_community的验证码', verification_code, '1076627773@qq.com',
                     [email], fail_silently=False)
-    print(res)
     if res != 1:
-        static = '验证码发送失败'
+        static = 0
         print('验证码发送失败')
     else:
-        static = '验证码发送成功'
+        static = 1
         print('验证码发送成功')
-    return HttpResponse(static)
+    return verification_code, static
 
 
 @require_http_methods(["GET"])
@@ -271,16 +366,26 @@ def Email_Rand_Code(request):
 def search(request):
     username = request.GET.get("username")
     try:
-        his_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
-        err_code = 200
-        result = {
-            'err_code': err_code,
-            "msg": "这是" + username + "的信息",
-            "data": json.loads(his_info),
-        }
+        obj = UserProfile.objects.filter(name=username)
+        if obj:
+            his_info = serializers.serialize('json', obj)
+            err_code = 200
+            result = {
+                'err_code': err_code,
+                "msg": "这是" + username + "的信息",
+                "data": json.loads(his_info),
+            }
+            return JsonResponse(result, status=err_code)
+        else:
+
+            err_code = 400
+            result = {
+                'err_code': err_code,
+                "msg": "查无此人",
+            }
         return JsonResponse(result, status=err_code)
     except Exception as e:
-        err_code = 400
+        err_code = 500
         result = {
             "error_code": err_code,
             "msg": str(e)
@@ -294,20 +399,18 @@ def img_uploader(request):
     try:
         img = request.FILES['file']
         print(img)
-        print("gauiawhil")
         f = open('./media/photo/' + img.name, 'wb+')
         f.write(img.read())
-        print("写入数据")
         f.close()
         res = {
-            'code': 200,
+            'error_code': 200,
             'message': 'upload success'
         }
         return JsonResponse(res, status=200)
     except Exception as e:
         print(e)
         res = {
-            'code': 500,
+            'error_code': 500,
             'message': 'Count problems'
         }
         return JsonResponse(res, status=500)
