@@ -177,7 +177,7 @@ def search(request):
                 }
             }
             return JsonResponse(result, status=200)
-        except ArithmeticError as e:
+        except Exception as e:
             print(e)
             result = {
                 "error_code": 500,

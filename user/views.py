@@ -213,7 +213,7 @@ def personal_page(request):
                 "error_code": err_code,
                 "msg": str(e)
             }
-            return JsonResponse(result, status=err_code)
+            return JsonResponse(result)
 
 
 @require_http_methods(["GET"])
