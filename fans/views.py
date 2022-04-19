@@ -56,13 +56,13 @@ def following(request):
                 "error_code": 500,
                 "msg": 'Something wrong happens. Try again later.',
             }
-            return JsonResponse(result, status=500)
+            return JsonResponse(result, status=200)
     else:
         result = {
             "error_code": 400,
             'msg': 'INVALID REQUEST'
         }
-        return JsonResponse(result, status=400)
+        return JsonResponse(result, status=200)
 
 
 # 【POST】取消关注
