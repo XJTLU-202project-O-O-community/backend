@@ -113,21 +113,21 @@ def regist(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get("email")
-        given_verification = request.POST.get("given_verification")
-        verification = request.POST.get("code")
-        if encrypt(given_verification) == verification:
-            UserProfile.objects.create_user(name=username, password=password, email=email)
-            err_code = 200
-            result = {
-                "error_code": err_code,
-                "msg": "创建成功",
-            }
-        else:
-            err_code = 400
-            result = {
-                "error_code": err_code,
-                "msg": "创建失败"
-            }
+        #given_verification = request.POST.get("given_verification")
+        #verification = request.POST.get("code")
+        #if encrypt(given_verification) == verification:
+        UserProfile.objects.create_user(name=username, password=password, email=email)
+        err_code = 200
+        result = {
+            "error_code": err_code,
+            "msg": "创建成功",
+        }
+        #else:
+        #err_code = 400
+        #result = {
+        #    "error_code": err_code,
+        #    "msg": "创建失败"
+        #}
         return JsonResponse(result, status=err_code)
     except Exception as e:
         print(e)
