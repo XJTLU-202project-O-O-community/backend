@@ -9,12 +9,10 @@
 
 1. Install requirements
 ```bash
-pip install -r requirements
 pip install -r requirements.txt
 ```
 2. Set database mysql.
 ```
-2. Create a MySQL database
 1. install mysql 8.0 (versions >5.6 is ok)
 2. Add mysql as environment variable
 ```
@@ -37,11 +35,11 @@ Link: https://docs.docker.com/desktop/windows/release-notes/
 docker run -p 6379:6379 -d redis:5
 ```
 5. Init database
-5. Init database 
+
 ```bash
 python manage.py migrate
 ```
-
+6. runserver
 ```bash
 python manage.py runserver
 ```
