@@ -38,8 +38,8 @@ def inlog(request):
             "data": json.loads(person_info)
         }
         request.user.last_login = timezone.now()
-        return JsonResponse(result, status=err_code)
-
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
     else:
         err_code = 400
         result = {
@@ -47,7 +47,8 @@ def inlog(request):
             "msg": "邮箱或密码错误",
             "email": email,
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["POST"])
@@ -69,7 +70,8 @@ def email_inlog(request):
                 "data": json.loads(person_info)
             }
             request.user.last_login = timezone.now()
-            return JsonResponse(result, status=err_code)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
         else:
             err_code = 400
             result = {
@@ -77,7 +79,8 @@ def email_inlog(request):
                 "msg": "邮箱或验证码错误",
                 "email": email,
             }
-            return JsonResponse(result, status=err_code)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
 
     except Exception as e:
         err_code = 400
@@ -86,7 +89,8 @@ def email_inlog(request):
             "msg": str(e),
             "email": email,
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["GET"])
@@ -103,7 +107,8 @@ def outlog(request):
             "data": json.loads(person_info)
         }
         logout(request)
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["POST"])
@@ -128,7 +133,8 @@ def regist(request):
         #    "error_code": err_code,
         #    "msg": "创建失败"
         #}
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
     except Exception as e:
         print(e)
         err_code = 500
@@ -136,7 +142,8 @@ def regist(request):
             "error_code": err_code,
             "msg": str(e),
         }
-        return JsonResponse(result, status=400)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["GET"])
@@ -156,14 +163,16 @@ def send_code(request):
             }
             request.session['verification'] = code
             print(request.session['verification'])
-            return JsonResponse(result, status=err_code)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
         else:
             err_code = 400
             result = {
                 "error_code": err_code,
                 "msg": "验证码发送失败",
             }
-            return JsonResponse(result, status=err_code)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
 
     except Exception as e:
         err_code = 500
@@ -171,7 +180,8 @@ def send_code(request):
             "error_code": err_code,
             "msg": str(e)
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["GET"])
@@ -206,14 +216,16 @@ def personal_page(request):
                          "personal_data": json.loads(his_json_info)
                          }
             }
-            return JsonResponse(result, status=err_code)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
         except Exception as e:
             err_code = 500
             result = {
                 "error_code": err_code,
                 "msg": str(e)
             }
-            return JsonResponse(result)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
 
 
 @require_http_methods(["GET"])
@@ -229,14 +241,16 @@ def my_page(request):
             "msg": "this is " + my_info[0].name + " personal page",
             "data": json.loads(my_json_info),
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
     except Exception as e:
         err_code = 500
         result = {
             "error_code": err_code,
             "msg": str(e)
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["POST"])
@@ -290,20 +304,22 @@ def edit(request):
         personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
         result = {
-            'err_code': err_code,
+            'error_code': err_code,
             "msg": "modify success",
             "data": json.loads(personal_info),
         }
 
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
     except Exception as e:
         err_code = 500
         result = {
-            'err_code': err_code,
+            'error_code': err_code,
             "msg": str(e)
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["POST"])
@@ -322,19 +338,21 @@ def change_pwd(request):
         personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
         result = {
-            'err_code': err_code,
+            'error_code': err_code,
             "msg": "修改密码成功",
             "data": json.loads(personal_info),
         }
 
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
     else:
         err_code = 400
-        res = {
+        result = {
             "error_code": err_code,
             "msg": "修改失败，原参数不匹配",
         }
-        return JsonResponse(res, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 def Email_Rand_Code(email):
@@ -371,26 +389,29 @@ def search(request):
             his_info = serializers.serialize('json', obj)
             err_code = 200
             result = {
-                'err_code': err_code,
+                'error_code': err_code,
                 "msg": "这是" + username + "的信息",
                 "data": json.loads(his_info),
             }
-            return JsonResponse(result, status=err_code)
+            # return JsonResponse(result, status=err_code)
+            return JsonResponse(result, status=200)
         else:
 
             err_code = 400
             result = {
-                'err_code': err_code,
+                'error_code': err_code,
                 "msg": "查无此人",
             }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
     except Exception as e:
         err_code = 500
         result = {
             "error_code": err_code,
             "msg": str(e)
         }
-        return JsonResponse(result, status=err_code)
+        # return JsonResponse(result, status=err_code)
+        return JsonResponse(result, status=200)
 
 
 @require_http_methods(["POST"])
@@ -402,18 +423,20 @@ def img_uploader(request):
         f = open('./media/photo/' + img.name, 'wb+')
         f.write(img.read())
         f.close()
-        res = {
+        result = {
             'error_code': 200,
             'message': 'upload success'
         }
-        return JsonResponse(res, status=200)
+        # return JsonResponse(result, status=200)
+        return JsonResponse(result, status=200)
     except Exception as e:
         print(e)
-        res = {
+        result = {
             'error_code': 500,
             'message': 'Count problems'
         }
-        return JsonResponse(res, status=500)
+        # return JsonResponse(result, status=500)
+        return JsonResponse(result, status=200)
 
 
 '''@login_required

@@ -10,7 +10,7 @@
 
 1. Install requirements
 ```bash
-pip install -r requirements
+pip install -r requirements.txt
 ```
 2. Create a MySQL database
 ```sql
