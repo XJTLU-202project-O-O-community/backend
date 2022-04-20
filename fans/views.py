@@ -68,8 +68,9 @@ def following(request):
 # 【POST】取消关注
 @require_http_methods(["POST"])
 def following_delete(request):
-    user_id = request.POST.get("user_id")
-    following_id = request.POST.get("following_id")
+    request_body = json.loads(request.body)
+    user_id = request_body.get("user_id")
+    following_id = request_body.get("following_id")
     try:
         following_obj = Following.objects.get(user_id=user_id, following_id=following_id)
         following_obj.delete()
