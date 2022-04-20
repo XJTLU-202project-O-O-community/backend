@@ -23,7 +23,7 @@ pip install -r requirements.txt
 CREATE DATABASE oo_community CHARACTER SET utf8;
 ```
 ![img_1.png](img_1.png)
-4. Start Redis Server 
+5. Start Redis Server 
 ```angular2html
 1. install docker desktop (for Windows) 4.4.4
 Link: https://docs.docker.com/desktop/windows/release-notes/
@@ -34,12 +34,12 @@ Link: https://docs.docker.com/desktop/windows/release-notes/
 ```bash
 docker run -p 6379:6379 -d redis:5
 ```
-5. Init database
+6. Init database
 
 ```bash
 python manage.py migrate
 ```
-6. runserver
+7. runserver
 ```bash
 python manage.py runserver
 ```
