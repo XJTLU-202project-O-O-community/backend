@@ -15,7 +15,7 @@ class moments_info(models.Model):
 
 class comments(models.Model):
     poster = models.ForeignKey(to=UserProfile, on_delete=models.CASCADE, to_field="id")
-    match_moment = models.ForeignKey(to="moments_info", on_delete=models.CASCADE, to_field="id")
+    match_moment = models.ForeignKey(to="moments_info", on_delete=models.CASCADE)
     content = models.TextField(max_length=100, default="")
     ctime = models.DateTimeField(auto_now_add=True)
 

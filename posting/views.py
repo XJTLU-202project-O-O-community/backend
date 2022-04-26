@@ -67,6 +67,12 @@ def single_post(request):
             content = request.POST.get("content")
             imgList = request.POST.get("imglist")
             print(user_id,content,imgList)
+            if content=="undefined":
+                result = {
+                    'error_code': 300,
+                    'msg': 'None content',
+                }
+                return JsonResponse(result, status=200)
             moments = moments_info.objects.create(user_id_id=user_id, content=content, thumbs=0, likes=0)
             if imgList != None:
                 imgList = imgList.split(',')
@@ -176,5 +182,55 @@ def img_uploader(request):
             'message': 'Count problems'
         }
         return JsonResponse(res, status=500)
+
+@require_http_methods(['GET'])
+def get_moments(request):
+    try:
+        ids = moments_info.objects.values("id").distinct().order_by("id")
+        comment={}
+        for id in ids:
+            comment[id["id"]] = list(comments.objects.filter(match_moment=id["id"]).values('poster__name','poster__photo','content',
+                                                                      'ctime').order_by('-ctime'))
+        print(comment)
+
+        res = {
+            'code': 200,
+            'message': 'Successfully get messages',
+            'data': {
+                'comments': comment
+            }
+        }
+        return JsonResponse(res, status=200)
+    except Exception as e:
+        print(e)
+        res = {
+            'code': 500,
+            'message': 'Count problems'
+        }
+        return JsonResponse(res, status=500)
+
+
+@require_http_methods('POST')
+def post_moment(request):
+    try:
+        print(request.POST)
+        user_id = request.POST.get("poster_id")
+        content = request.POST.get('content')
+        moment_id = request.POST.get('moment')
+        comments.objects.create(poster_id=user_id, content=content, match_moment_id=moment_id)
+        res = {
+            'code': 200,
+            'message': 'Add moment successfully',
+        }
+        return JsonResponse(res, status=200)
+    except Exception as e:
+        print(e)
+        res = {
+            'code': 500,
+            'message': 'Count problem',
+        }
+        return JsonResponse(res, status=500)
+
+
 
 # Create your views here.
