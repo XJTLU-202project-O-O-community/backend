@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="50903808-1cae-4fd1-9ecc-b1fbbc0306d5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user/.idea/workspace.xml" afterDir="false" />
+=======
     <list default="true" id="5e34487e-d918-4833-814d-39116b2b04ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fans/views.py" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/consumers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
+>>>>>>> 03969d4a5aad7a8abd27ebce5757d78ae0cef571
+      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
+>>>>>>> 5c156da7dd65250981dd3329d7df24b8e5e94fc3
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +48,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.stylelint" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="backend" type="Python.DjangoServer" factoryName="Django server">
@@ -68,11 +82,29 @@
       <created>1649775221537</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< HEAD
+      <updated>1649758926291</updated>
+      <workItem from="1649758929410" duration="2733000" />
+      <workItem from="1649768279985" duration="50000" />
+      <workItem from="1649768345039" duration="23000" />
+      <workItem from="1649768388217" duration="92000" />
+      <workItem from="1649768495858" duration="22000" />
+      <workItem from="1649768521658" duration="78000" />
+      <workItem from="1649768650991" duration="8000" />
+      <workItem from="1649768814928" duration="12000" />
+      <workItem from="1650251405195" duration="8920000" />
+      <workItem from="1650293113862" duration="4109000" />
+=======
       <updated>1649775221537</updated>
+<<<<<<< HEAD
       <workItem from="1649775225115" duration="3597000" />
       <workItem from="1650089009483" duration="44000" />
       <workItem from="1650091080040" duration="2059000" />
       <workItem from="1650330280476" duration="1614000" />
+=======
+      <workItem from="1649775225115" duration="2559000" />
+>>>>>>> 03969d4a5aad7a8abd27ebce5757d78ae0cef571
+>>>>>>> 5c156da7dd65250981dd3329d7df24b8e5e94fc3
     </task>
     <servers />
   </component>

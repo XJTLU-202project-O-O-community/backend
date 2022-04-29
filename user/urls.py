@@ -9,16 +9,18 @@ urlpatterns = [
 
     # 注册页面
     path('register/', views.regist),
-    # 登陆页面
+    # 密码登陆页面
     path('login/', views.inlog),
+    #邮箱登陆界面
+    path('email_login/', views.email_inlog),
     # 登出页面
     path('logout/', views.outlog),
     # 他人信息页面
     path('currentUser/', views.personal_page),
     #本人个人界面
     path('my/', views.my_page),
-    #这个是用来测试的，别管
-    #path('email/', views.Email_Rand_Code),
+    #发送验证码
+    path('send_email/', views.send_code),
     # 修改密码页面
     path('change_pwd/', views.change_pwd),
     # 修改个人信息页面

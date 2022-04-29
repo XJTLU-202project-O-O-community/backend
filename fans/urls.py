@@ -9,4 +9,8 @@ urlpatterns = [
     path('following_delete/', views.following_delete),
     path('fans/', views.fans),
     path('search/', views.search),
+    path('group/', views.group),
+    path('group_edit/', views.group_edit),
+    path('following_group_edit/', views.group_edit),
+    path('group_delete/', views.group_delete)
 ]

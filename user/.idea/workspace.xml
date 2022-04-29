@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9c103c5-dd16-427f-b065-fcd13ebf5c6c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/oo_community.SmA2NA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/ee5fdcec-b3ef-4bce-9348-d595636ca4c7/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fans/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../fans/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="a9c103c5-dd16-427f-b065-fcd13ebf5c6c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +35,7 @@
       <updated>1649768424328</updated>
       <workItem from="1649768425852" duration="51000" />
       <workItem from="1649768603132" duration="57000" />
+      <workItem from="1649768782316" duration="30000" />
     </task>
     <servers />
   </component>
