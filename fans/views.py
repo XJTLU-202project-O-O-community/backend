@@ -1,5 +1,7 @@
 import json
-from django.db.models import Q, F, Model
+
+import django
+from django.db.models import Q, F
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from user.models import UserProfile
@@ -15,63 +17,49 @@ def following(request):
     if request.method == 'GET':
         user_id = request.GET.get("user_id")
 
-        group_info = Following.objects.filter(user_id=user_id).values("group").order_by("created_time")
-        groups = set()
-        for x in group_info:
-            groups.add(x['group'])
-        if len(groups) <= 0:
-            result = {
-                "error_code": 204,
-                "msg": "No followings",
-            }
-            return JsonResponse(result, status=200)
-
-        followings = []
-        for group in group_info:
-            group_members = []
-            followings_info = Following.objects.filter(user_id=user_id, group=group).values("following").order_by(
-                "created_time")
-            for following in followings_info:
-                info = UserProfile.objects.filter(id=following['following']) \
-                    .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
-                    .values("username", "email", "photo", "actual_name", "gender", "birth",
-                            "signature", "id", "moment")[0]
-                group_members.append(info)
-            followings.append({
-                "group_id": group.id,
-                "group_name": group.group_name,
-                "group_members": group_members,
-            })
-        result = {
-            "error_code": 200,
-            "msg": "success",
-            "data": {
-                "user_id": user_id,
-                "following_list": followings
-            }
-        }
-        return JsonResponse(result, status=200)
-
-    elif request.method == 'POST':
-        request_body = json.loads(request.body)
-        user_id = request_body.get("user_id")
-        following_id = request_body.get("following_id")
-        group_id = request_body.get("group_id")
         try:
-            obj, isCreated = Following.objects.get_or_create(user_id=user_id, following_id=following_id,)
-            if isCreated:
+            group_info = Following.objects.filter(user_id=user_id).values("group").order_by("created_time")
+            groups = set()
+            for x in group_info:
+                groups.add(x['group'])
+            if len(groups) <= 0:
                 result = {
-                    "error_code": 200,
-                    "msg": "user_" + str(user_id) + ' follows user_' + str(following_id) + " successfully.",
+                    "error_code": 204,
+                    "msg": "No followings",
                 }
-            else:
-                obj.group_id = group_id
-                obj.save()
-                result = {
-                    "error_code": 200,
-                    "msg": "user_" + str(user_id) + ' has already followed user_' + str(
-                        following_id) + " successfully.",
+                return JsonResponse(result, status=200)
+
+            followings = []
+            for group in groups:
+                if group:
+                    related_group_info = Group.objects.get(id=group)
+                    group_id = related_group_info.id
+                    group_name = related_group_info.group_name
+                else:
+                    group_id = None
+                    group_name = None
+                group_members = []
+                followings_info = Following.objects.filter(user_id=user_id, group=group)\
+                    .values("following").order_by("created_time")
+                for following in followings_info:
+                    info = UserProfile.objects.filter(id=following['following']) \
+                        .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
+                        .values("username", "email", "photo", "actual_name", "gender", "birth",
+                                "signature", "id", "moment")[0]
+                    group_members.append(info)
+                followings.append({
+                    "group_id":  group_id,
+                    "group_name": group_name,
+                    "group_members": group_members,
+                })
+            result = {
+                "error_code": 200,
+                "msg": "success",
+                "data": {
+                    "user_id": user_id,
+                    "following_list": followings
                 }
+            }
             return JsonResponse(result, status=200)
         except Exception as e:
             print(e)
@@ -80,6 +68,44 @@ def following(request):
                 "msg": 'Something wrong happens. Try again later.',
             }
             return JsonResponse(result, status=200)
+
+    elif request.method == 'POST':
+        request_body = json.loads(request.body)
+        user_id = request_body.get("user_id")
+        following_id = request_body.get("following_id")
+        group_id = request_body.get("group_id")
+        try:
+            obj, isCreated = Following.objects.get_or_create(user_id=user_id, following_id=following_id,)
+            if not isCreated:
+                result = {
+                    "error_code": 210,
+                    "msg": "user_" + str(user_id) + ' has already followed user_' + str(
+                        following_id) + " successfully.",
+                }
+            else:
+                try:
+                    obj.group_id = group_id
+                    obj.save()
+                    result = {
+                        "error_code": 200,
+                        "msg": "user_" + str(user_id) + ' follows user_' + str(
+                            following_id) + " successfully in Group id " + group_id
+                    }
+                except django.db.utils.IntegrityError as e:
+                    obj.delete()
+                    result = {
+                        "error_code": 400,
+                        "msg": "The group id %s does not exist." % group_id,
+                    }
+            return JsonResponse(result, status=200)
+        except ArithmeticError as e:
+            print(e)
+            result = {
+                "error_code": 500,
+                "msg": 'Something wrong happens. Try again later.',
+            }
+            return JsonResponse(result, status=200)
+
     else:
         result = {
             "error_code": 400,
@@ -91,8 +117,9 @@ def following(request):
 # 【POST】取消关注
 @require_http_methods(["POST"])
 def following_delete(request):
-    user_id = request.POST.get("user_id")
-    following_id = request.POST.get("following_id")
+    request_body = json.loads(request.body)
+    user_id = request_body.get("user_id")
+    following_id = request_body.get("following_id")
     try:
         following_obj = Following.objects.get(user_id=user_id, following_id=following_id)
         following_obj.delete()
@@ -106,7 +133,7 @@ def following_delete(request):
             "error_code": 430,
             'msg': 'The following relationship does not exist.'
         }
-        return JsonResponse(result, status=430)
+        return JsonResponse(result, status=200)
     except Following.MultipleObjectsReturned:
         followings = Following.objects.filter(user_id=user_id, following_id=following_id)
         followings.delete()
@@ -216,7 +243,8 @@ def group(request):
     user_id = request_body.get("user_id")
     group_name = request_body.get("group_name")
     try:
-        obj, isCreated = Group.objects.get_or_create(user_id=user_id, group_name=group_name)
+        obj, isCreated = Group.objects.get_or_create(group_name=group_name, user_id=user_id)
+        print(obj, isCreated)
     except Exception as e:
         print(e)
         result = {
@@ -227,12 +255,12 @@ def group(request):
     if isCreated:
         result = {
             "error_code": 200,
-            "msg": "group name %s has existed" % group_name,
+            "msg": "user_%s created group %s successfully." % (user_id, group_name),
         }
     else:
         result = {
-            "error_code": 200,
-            "msg": "user_%s created group %s successfully." % (user_id, group_name),
+            "error_code": 210,
+            "msg": "group name %s has existed" % group_name,
         }
     return JsonResponse(result, status=200)
 
@@ -246,7 +274,7 @@ def group_edit(request):
     group_name = request_body.get("group_name")
     try:
         group = Group.objects.get(id=group_id)
-        if user_id == group.following__user_id:
+        if str(user_id) == str(group.user_id):
             group.group_name = group_name
             group.save()
         else:
@@ -255,11 +283,11 @@ def group_edit(request):
                 "msg": 'do not have sufficient permission'
             }
             return JsonResponse(result, status=200)
-    except Model.DoesNotExist as e:
+    except Group.DoesNotExist as e:
         print(e)
         result = {
             "error_code": 400,
-            "msg": 'group id %s does not exist'
+            "msg": 'group id %s does not exist' % group_id
         }
         return JsonResponse(result, status=200)
     result = {
@@ -269,16 +297,31 @@ def group_edit(request):
     return JsonResponse(result, status=200)
 
 
-# 【POST】删除分组
+# 【POST】更改关注的人所在的分组
 @require_http_methods(["POST"])
-def following_group_delete(request):
+def following_group_change(request):
     request_body = json.loads(request.body)
     group_id = request_body.get("group_id")
     user_id = request_body.get("user_id")
     following_id = request_body.get("following_id")
     try:
-        following_obj = Following.objects.filter(user_id=user_id, following_id=following_id)
+        following_obj = Following.objects.get(user_id=user_id, following_id=following_id)
         following_obj.group_id = group_id
+        following_obj.save()
+    except Following.DoesNotExist as e:
+        print(e)
+        result = {
+            "error_code": 430,
+            "msg": 'The following relationship does not exist.'
+        }
+        return JsonResponse(result, status=200)
+    except django.db.utils.IntegrityError as e:
+        print(e)
+        result = {
+            "error_code": 430,
+            "msg": 'The group id %s does not exist.' % group_id
+        }
+        return JsonResponse(result, status=200)
     except Exception as e:
         print(e)
         result = {
@@ -297,11 +340,25 @@ def following_group_delete(request):
 @require_http_methods(["POST"])
 def group_delete(request):
     request_body = json.loads(request.body)
+    user_id = request_body.get("user_id")
     group_id = request_body.get("group_id")
     try:
         Following.objects.filter(group_id=group_id).update(group=None)
-        Group.objects.get(id=group_id).delete()
-    except Model.DoesNotExist as e:
+        group = Group.objects.get(id=group_id)
+        if str(group.user_id) == str(user_id):
+            group.delete()
+            result = {
+                "error_code": 200,
+                "msg": "user has deleted group id %s successfully." % group_id,
+            }
+            return JsonResponse(result, status=200)
+        else:
+            result = {
+                "error_code": 204,
+                "msg": 'do not have sufficient permission'
+            }
+            return JsonResponse(result, status=200)
+    except Group.DoesNotExist as e:
         print(e)
         result = {
             "error_code": 400,
@@ -315,8 +372,3 @@ def group_delete(request):
             "msg": 'Something wrong happens. Please try again later'
         }
         return JsonResponse(result, status=200)
-    result = {
-        "error_code": 200,
-        "msg": "user has deleted group id %s successfully." % group_id,
-    }
-    return JsonResponse(result, status=200)
