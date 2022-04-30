@@ -115,6 +115,7 @@ def outlog(request):
 @require_http_methods(["POST"])
 def regist(request):
     try:
+        print(request.POST)
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get("email")
@@ -124,7 +125,11 @@ def regist(request):
         given_verification = request.POST.get("given_verification")
         code = request.session.get("code")
         author_email = request.session.get('email')
-
+        print(author_email)
+        print(email)
+        print(code)
+        print(gender)
+        print(given_verification)
         if given_verification == code and author_email == email:
             user = UserProfile.objects.create_user(name=username, password=password, email=email)
             err_code = 200
@@ -160,9 +165,10 @@ def regist(request):
         return JsonResponse(result, status=200)
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def send_code(request):
-    email = request.GET.get("email")
+    email = request.POST.get("email")
+    print(request.POST)
     try:
         code, static = Email_Rand_Code(email)
         if static == 1:
@@ -170,6 +176,7 @@ def send_code(request):
             result = {
                 "error_code": err_code,
                 "msg": "验证码发送成功",
+                "author_email": email,
             }
             request.session['code'] = code
             request.session['email'] = email
