@@ -24,6 +24,7 @@ def encrypt(code):
 
 @require_http_methods(["POST"])
 def inlog(request):
+    print(request.POST)
     email = request.POST.get("email")  # 获取用户名
     password = request.POST.get("password")  # 获取用户的密码
     user = authenticate(username=email, password=password)  # 验证用户名和密码，返回用户对象
@@ -282,6 +283,7 @@ def my_page(request):
 
 @require_http_methods(["POST"])
 def edit(request):
+    print(request.POST)
     # 利用old_username获取数据库中信息
     try:
         if len(request.session.items()) == 0:
