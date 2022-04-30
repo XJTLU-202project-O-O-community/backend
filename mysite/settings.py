@@ -143,7 +143,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'user.UserProfile'
 LOGIN_URL = '/user/login/'
 
-'''# 设置邮件域名，一般为使用哪个邮箱，就有固定的域名，例如我使用的是网易的163邮箱
+'''# 设置邮件域名，一般为使用哪个邮箱，就有固定的域名
 EMAIL_HOST = 'smtp.qq.com'
 # 设置端口号，为数字，网易的默认端口是25
 EMAIL_PORT = 465
@@ -161,3 +161,10 @@ EMAIL_HOST = 'smtp.qq.com'   #发送邮件的邮箱 的 SMTP服务器，这里�
 EMAIL_PORT = 465     #发件箱的SMTP服务器端口
 EMAIL_HOST_USER = '1076627773@qq.com'    #发送邮件的邮箱地址
 EMAIL_HOST_PASSWORD = 'fkzagikokuffghha'         #发送邮件的邮箱密码(这里使用的是授权码)
+
+
+SESSION_COOKIE_AGE = 60 * 10 # 10分钟
+SESSION_SAVE_EVERY_REQUEST = True  # 每次请求会更新sessions有效期限
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 关闭浏览器，则COOKIE失效
+
+

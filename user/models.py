@@ -47,6 +47,7 @@ class UserProfile(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     photo = models.ImageField(upload_to="photo/", default='photo/default.jpg', null=False)
+    background = models.CharField(default='default.jpg', null=False, max_length=32)
     actual_name = models.CharField(max_length=32, null=True)
     gender = models.CharField(max_length=2, null=True)
     birth = models.DateField(null=True)
@@ -75,3 +76,6 @@ class UserProfile(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+
