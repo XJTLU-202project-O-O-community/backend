@@ -54,6 +54,7 @@ def inlog(request):
 
 @require_http_methods(["POST"])
 def email_inlog(request):
+    print(request.POST)
     email = request.POST.get("email")
     given_verification = request.POST.get("given_verification")
     try:
