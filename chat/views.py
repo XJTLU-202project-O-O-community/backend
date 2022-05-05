@@ -19,18 +19,24 @@ def history(request):
             .order_by("createdAt") \
             .annotate(recipient_id=F('room__recipient_id'), user_id=F('room__user_id')) \
             .values("recipient_id", "user_id", "message", "createdAt", "id")
-        result = {
-            "error_code": 200,
-            "msg": "success",
-            "data": list(history_msgs),
-        }
+        if len(history_msgs)>0:
+            result = {
+                "error_code": 200,
+                "msg": "success",
+                "data": list(history_msgs),
+            }
 
-        channel_layer = get_channel_layer()
-        notification = {
-            'type': 'change_target',
-            'target_user_id': target_id,
-        }
-        async_to_sync(channel_layer.group_send)("{}".format(user_id), notification)
+            channel_layer = get_channel_layer()
+            notification = {
+                'type': 'change_target',
+                'target_user_id': target_id,
+            }
+            async_to_sync(channel_layer.group_send)("{}".format(user_id), notification)
+        else:
+            result = {
+                "error_code": 430,
+                "msg": "no chat history",
+            }
     except Exception as e:
         print(e)
         result = {
