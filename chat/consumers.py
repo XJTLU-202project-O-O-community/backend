@@ -43,8 +43,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         print("【RECEIVE MESSAGE】", text_data_json)
         user_id = text_data_json['user_id']
         recipient_id = text_data_json['recipient_id']
+
         message = text_data_json['message'].strip()
-        has_read = True if self.target_user_id == user_id else False
+        has_read = False
 
         msg = await self.saveMsg(user_id=user_id, recipient_id=recipient_id, message=message, has_read=has_read)
 
@@ -60,14 +61,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "{}".format(msg.room.recipient_id),
             {
                 'type': 'chat_message',
+                'id': msg,
                 'message': notification
             }
         )
 
     # Receive message from room group
     async def chat_message(self, event):
-        print("【SEND MESSAGE】", event)
+        msg = await self.updateMsg(id=event['id'])
+        print("【UPDATE MESSAGE】", msg)
+
         # Send message to WebSocket
+        print("【SEND MESSAGE】", event['message'])
         await self.send(text_data=json.dumps(event['message']))
 
     @database_sync_to_async
@@ -77,6 +82,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
         msg.save()
         print("【SAVE MESSAGE】", msg)
         return msg
+
+    @database_sync_to_async
+    def updateMsg(self, id=None):
+        try:
+            message_model = MessageModel.objects.get(id=id)
+            if message_model.room__user_id == self.target_user_id:
+                message_model.hasRead = True
+                message_model.save()
+            return message_model
+        except MessageModel.DoesNotExist as e:
+            print(e)
+        except MessageModel.MultipleObjectsReturned as e:
+            print(e)
+        except Exception as e:
+            print(e)
+        return None
 
     async def change_target(self, event):
         print("【CHANGE TARGET】", event)
