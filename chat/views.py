@@ -19,7 +19,7 @@ def history(request):
             .order_by("createdAt") \
             .annotate(recipient_id=F('room__recipient_id'), user_id=F('room__user_id')) \
             .values("recipient_id", "user_id", "message", "createdAt", "id")
-        if len(history_msgs)>0:
+        if len(history_msgs) > 0:
             result = {
                 "error_code": 200,
                 "msg": "success",
@@ -40,7 +40,7 @@ def history(request):
     except Exception as e:
         print(e)
         result = {
-            "error_code": 200,
+            "error_code": 500,
             "msg": "Something wrong happens. Please try again later",
         }
     finally:
@@ -56,7 +56,7 @@ def messagelist(request):
             .annotate(message_user_id=F('user_id'), username=F('user__name'), avatar=F('user__photo')) \
             .values('message_user_id', 'username', 'avatar')
         print(id_1)
-        id_2 = MessageList.objects.filter(user_id=user_id)\
+        id_2 = MessageList.objects.filter(user_id=user_id) \
             .exclude(recipient_id__in=[x['message_user_id'] for x in list(id_1)]) \
             .annotate(message_user_id=F('recipient_id'), username=F('recipient__name'), avatar=F('recipient__photo')) \
             .values('message_user_id', 'username', 'avatar')
@@ -68,7 +68,8 @@ def messagelist(request):
                 try:
                     x['msg'] = MessageModel.objects \
                                    .filter((Q(room__user_id=x['message_user_id']) & Q(room__recipient_id=user_id)) |
-                                           (Q(room__user_id=user_id) & Q(room__recipient_id=x['message_user_id'])))[:1][0].message
+                                           (Q(room__user_id=user_id) & Q(room__recipient_id=x['message_user_id'])))[:1][
+                        0].message
                 except Exception as e:
                     print(e)
                 x['num'] = MessageList.objects \
