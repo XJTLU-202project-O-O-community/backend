@@ -43,6 +43,7 @@ def history(request):
 
 @require_http_methods(["GET"])
 def messagelist(request):
+    result = {}
     user_id = request.GET.get("user_id")
     try:
         id_1 = MessageList.objects.filter(recipient_id=user_id) \
@@ -66,15 +67,21 @@ def messagelist(request):
                     print(e)
                 x['num'] = MessageList.objects \
                     .filter(recipient_id=user_id, user_id=x['message_user_id'], room_id__hasRead=False).count()
-        result = {
-            "error_code": 200,
-            "msg": "success",
-            "data": list(message_list),
-        }
-    except ArithmeticError as e:
+            result = {
+                "error_code": 200,
+                "msg": "success",
+                "data": list(message_list),
+            }
+        else:
+            result = {
+                "error_code": 430,
+                "msg": "no message list",
+            }
+    except Exception as e:
         print(e)
         result = {
             "error_code": 500,
             "msg": "Something wrong happens. Please try again later",
         }
-    return JsonResponse(result)
+    finally:
+        return JsonResponse(result)
