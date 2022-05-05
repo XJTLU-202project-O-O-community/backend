@@ -1,16 +1,17 @@
+import hashlib
 import json
-import time
+import os
 
-from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import JsonResponse, HttpResponse, request
+from django.core.mail import send_mail
+from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
-from user.models import UserProfile
+
 from fans.models import Following
-import hashlib
+from user.models import UserProfile
 
 
 # Create your views here.
@@ -23,9 +24,9 @@ def encrypt(code):
 
 @require_http_methods(["POST"])
 def inlog(request):
+    print(request.POST)
     email = request.POST.get("email")  # 获取用户名
     password = request.POST.get("password")  # 获取用户的密码
-
     user = authenticate(username=email, password=password)  # 验证用户名和密码，返回用户对象
     if user:  # 如果用户对象存在
         login(request, user)  # 用户登陆
@@ -53,13 +54,13 @@ def inlog(request):
 
 @require_http_methods(["POST"])
 def email_inlog(request):
+    print(request.POST)
     email = request.POST.get("email")
-    code = request.POST.get("code")
-    verification = request.POST.get("given_verification")
+    given_verification = request.POST.get("given_verification")
     try:
+        code = request.session.get("code")
         user = UserProfile.objects.get(email=email)
-        print(user)
-        if encrypt(verification) == code and user:
+        if given_verification == code and user:
             login(request, user)
             person = UserProfile.objects.filter(name=user.name)
             person_info = serializers.serialize("json", person)
@@ -70,6 +71,8 @@ def email_inlog(request):
                 "data": json.loads(person_info)
             }
             request.user.last_login = timezone.now()
+            request.session.delete("email")
+            request.session.delete("code")
             # return JsonResponse(result, status=err_code)
             return JsonResponse(result, status=200)
         else:
@@ -118,25 +121,43 @@ def regist(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get("email")
-        #given_verification = request.POST.get("given_verification")
-        #verification = request.POST.get("code")
-        #if encrypt(given_verification) == verification:
-        UserProfile.objects.create_user(name=username, password=password, email=email)
-        err_code = 200
-        result = {
-            "error_code": err_code,
-            "msg": "创建成功",
-        }
-        #else:
-        #err_code = 400
-        #result = {
-        #    "error_code": err_code,
-        #    "msg": "创建失败"
-        #}
+        gender = request.POST.get("gender")
+        actual_name = request.POST.get("actual_name")
+        birth = request.POST.get("birth")
+        given_verification = request.POST.get("given_verification")
+        code = request.session.get("code")
+        author_email = request.session.get('email')
+        print(author_email)
+        print(email)
+        print(code)
+        print(gender)
+        print(given_verification)
+        if given_verification == code and author_email == email:
+            user = UserProfile.objects.create_user(name=username, password=password, email=email)
+            err_code = 200
+            if gender != "undefined":
+                user.gender = gender
+            if birth != "undefined":
+                user.birth = birth
+            if actual_name is not None:
+                user.actual_name = actual_name
+            user.save()
+            result = {
+                "error_code": err_code,
+                "msg": "创建成功",
+            }
+            request.session.flush()
+        else:
+            err_code = 400
+            result = {
+                "error_code": err_code,
+                "msg": "创建失败"
+            }
+
+
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
-        print(e)
         err_code = 500
         result = {
             "error_code": err_code,
@@ -146,9 +167,10 @@ def regist(request):
         return JsonResponse(result, status=200)
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def send_code(request):
-    email = request.GET.get("email")
+    email = request.POST.get("email")
+    print(request.POST)
     try:
         code, static = Email_Rand_Code(email)
         if static == 1:
@@ -156,13 +178,10 @@ def send_code(request):
             result = {
                 "error_code": err_code,
                 "msg": "验证码发送成功",
-                "data": {
-                    "code": encrypt(code),
-                    "start_time": time.time(),
-                }
+                "author_email": email,
             }
-            request.session['verification'] = code
-            print(request.session['verification'])
+            request.session['code'] = code
+            request.session['email'] = email
             # return JsonResponse(result, status=err_code)
             return JsonResponse(result, status=200)
         else:
@@ -185,21 +204,25 @@ def send_code(request):
 
 
 @require_http_methods(["GET"])
-@login_required
 def personal_page(request):
     if request.method == "GET":
         his_id = request.GET.get("his_id")
         my_id = request.user.id
         try:
+            if len(request.session.items()) == 0:
+                err_code = 401
+                result = {
+                    "error_code": err_code,
+                    "msg": "session expired",
+                }
+                return JsonResponse(result, status=200)
             err_code = 200
             if his_id != my_id:
                 his_info = UserProfile.objects.filter(id=his_id)
-                print(his_info)
                 obj = Following.objects.filter(user_id=my_id)
                 is_fan = False
                 for each in obj:
                     if str(each.following_id) == his_id:
-                        print("T")
                         is_fan = True
                         break
                 his_json_info = serializers.serialize("json", his_info)
@@ -229,10 +252,16 @@ def personal_page(request):
 
 
 @require_http_methods(["GET"])
-@login_required
 def my_page(request):
     my_id = request.user.id
     try:
+        if len(request.session.items()) == 0:
+            err_code = 401
+            result = {
+                "error_code": err_code,
+                "msg": "session expired",
+            }
+            return JsonResponse(result, status=200)
         my_info = UserProfile.objects.filter(id=my_id)
         my_json_info = serializers.serialize("json", my_info)
         err_code = 200
@@ -254,11 +283,17 @@ def my_page(request):
 
 
 @require_http_methods(["POST"])
-@login_required
 def edit(request):
+    print(request.POST)
     # 利用old_username获取数据库中信息
     try:
-
+        if len(request.session.items()) == 0:
+            err_code = 401
+            result = {
+                "error_code": err_code,
+                "msg": "session expired",
+            }
+            return JsonResponse(result, status=200)
         old_username = request.user.name
         old_info = UserProfile.objects.get(name=old_username)
 
@@ -271,9 +306,16 @@ def edit(request):
             username = old_username
         # 修改头像
         photo_name = request.POST.get('photo')
-        if photo_name != '':
-            print(photo_name)
+        if photo_name is not None:
+            if old_info.photo != "photo/default.jpg":
+                os.remove('./media/'+str(old_info.photo))
             old_info.photo = "photo/" + photo_name
+
+
+        # 修改背景
+        background_name = request.POST.get('background')
+        if background_name is not None:
+            old_info.background = background_name
 
         # 修改真实姓名
         actual_name = request.POST.get('actual_name')
@@ -323,36 +365,44 @@ def edit(request):
 
 
 @require_http_methods(["POST"])
-@login_required
 def change_pwd(request):
     username = request.user.name
     email = request.POST.get("email")
-    code = request.POST.get("code")
-    verification = request.POST.get("given_verification")
+    given_verification = request.POST.get("given_verification")
     old_password = request.POST.get("old_password")
     new_password = request.POST.get("new_password")
+    code = request.session.get("code")
+    try:
+        if len(request.session.items()) == 0:
+            err_code = 401
+            result = {
+                "error_code": err_code,
+                "msg": "session expired",
+            }
+            return JsonResponse(result, status=200)
+        # 核对旧密码
+        if request.user.check_password(old_password) and email == request.user.email and given_verification == code:
+            request.user.set_password(new_password)
+            personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
+            err_code = 200
+            result = {
+                'error_code': err_code,
+                "msg": "修改密码成功",
+                "data": json.loads(personal_info),
+            }
+            request.session.flush()
+            # return JsonResponse(result, status=err_code)
 
-    # 核对旧密码
-    if request.user.check_password(old_password) and email == request.user.email and encrypt(verification) == code:
-        request.user.set_password(new_password)
-        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
-        err_code = 200
-        result = {
-            'error_code': err_code,
-            "msg": "修改密码成功",
-            "data": json.loads(personal_info),
-        }
-
-        # return JsonResponse(result, status=err_code)
+        else:
+            err_code = 400
+            result = {
+                "error_code": err_code,
+                "msg": "修改失败，原参数不匹配",
+            }
+            # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
-    else:
-        err_code = 400
-        result = {
-            "error_code": err_code,
-            "msg": "修改失败，原参数不匹配",
-        }
-        # return JsonResponse(result, status=err_code)
-        return JsonResponse(result, status=200)
+    except Exception as e:
+        return HttpResponse(str(e), status=200)
 
 
 def Email_Rand_Code(email):
@@ -380,10 +430,16 @@ def Email_Rand_Code(email):
 
 
 @require_http_methods(["GET"])
-@login_required
 def search(request):
     username = request.GET.get("username")
     try:
+        if len(request.session.items()) == 0:
+            err_code = 401
+            result = {
+                "error_code": err_code,
+                "msg": "session expired",
+            }
+            return JsonResponse(result, status=200)
         obj = UserProfile.objects.filter(name=username)
         if obj:
             his_info = serializers.serialize('json', obj)
@@ -415,11 +471,16 @@ def search(request):
 
 
 @require_http_methods(["POST"])
-@login_required
 def img_uploader(request):
     try:
+        if len(request.session.items()) == 0:
+            err_code = 401
+            result = {
+                "error_code": err_code,
+                "msg": "session expired",
+            }
+            return JsonResponse(result, status=200)
         img = request.FILES['file']
-        print(img)
         f = open('./media/photo/' + img.name, 'wb+')
         f.write(img.read())
         f.close()
@@ -430,7 +491,6 @@ def img_uploader(request):
         # return JsonResponse(result, status=200)
         return JsonResponse(result, status=200)
     except Exception as e:
-        print(e)
         result = {
             'error_code': 500,
             'message': 'Count problems'
@@ -438,8 +498,3 @@ def img_uploader(request):
         # return JsonResponse(result, status=500)
         return JsonResponse(result, status=200)
 
-
-'''@login_required
-@require_http_methods(["GET"])
-def my_page(request):
-    my_id'''
