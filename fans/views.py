@@ -18,10 +18,10 @@ def following(request):
         user_id = request.GET.get("user_id")
 
         try:
-            group_info = Following.objects.filter(user_id=user_id).values("group").order_by("created_time")
-            groups = set()
-            for x in group_info:
-                groups.add(x['group'])
+            groups = set(Group.objects.filter(user_id=user_id).order_by("created_time"))
+            if Following.objects.filter(user_id=user_id, group=None).count() > 0:
+                groups.add(None)
+            print(groups)
             if len(groups) <= 0:
                 result = {
                     "error_code": 204,
@@ -32,23 +32,23 @@ def following(request):
             followings = []
             for group in groups:
                 if group:
-                    related_group_info = Group.objects.get(id=group)
-                    group_id = related_group_info.id
-                    group_name = related_group_info.group_name
+                    group_id = group.id
+                    group_name = group.group_name
                 else:
                     group_id = None
                     group_name = None
                 group_members = []
-                followings_info = Following.objects.filter(user_id=user_id, group=group)\
+                followings_info = Following.objects.filter(user_id=user_id, group=group) \
                     .values("following").order_by("created_time")
                 for following in followings_info:
                     info = UserProfile.objects.filter(id=following['following']) \
-                        .annotate(username=F('name'), moment=F("moments_info__content")).order_by('-moments_info__ctime') \
+                        .annotate(username=F('name'), moment=F("moments_info__content")).order_by(
+                        '-moments_info__ctime') \
                         .values("username", "email", "photo", "actual_name", "gender", "birth",
                                 "signature", "id", "moment")[0]
                     group_members.append(info)
                 followings.append({
-                    "group_id":  group_id,
+                    "group_id": group_id,
                     "group_name": group_name,
                     "group_members": group_members,
                 })
@@ -75,7 +75,29 @@ def following(request):
         following_id = request_body.get("following_id")
         group_id = request_body.get("group_id")
         try:
-            obj, isCreated = Following.objects.get_or_create(user_id=user_id, following_id=following_id,)
+            if group_id:
+                if not Group.objects.get(id=group_id).user_id == user_id:
+                    result = {
+                        "error_code": 204,
+                        "msg": 'do not have sufficient permission'
+                    }
+                    return JsonResponse(result, status=200)
+        except Group.DoesNotExist as e:
+            print(e)
+            result = {
+                "error_code": 400,
+                "msg": "The group id %s does not exist." % group_id,
+            }
+        except Exception as e:
+            print(e)
+            result = {
+                "error_code": 500,
+                "msg": 'Something wrong happens. Try again later.',
+            }
+            return JsonResponse(result, status=200)
+
+        try:
+            obj, isCreated = Following.objects.get_or_create(user_id=user_id, following_id=following_id, )
             if not isCreated:
                 result = {
                     "error_code": 210,
@@ -83,22 +105,15 @@ def following(request):
                         following_id) + " successfully.",
                 }
             else:
-                try:
-                    obj.group_id = group_id
-                    obj.save()
-                    result = {
-                        "error_code": 200,
-                        "msg": "user_" + str(user_id) + ' follows user_' + str(
-                            following_id) + " successfully in Group id " + group_id
-                    }
-                except django.db.utils.IntegrityError as e:
-                    obj.delete()
-                    result = {
-                        "error_code": 400,
-                        "msg": "The group id %s does not exist." % group_id,
-                    }
+                obj.group_id = group_id
+                obj.save()
+                result = {
+                    "error_code": 200,
+                    "msg": "user_" + str(user_id) + ' follows user_' + str(
+                        following_id) + " successfully in Group id " + group_id
+                }
             return JsonResponse(result, status=200)
-        except ArithmeticError as e:
+        except Exception as e:
             print(e)
             result = {
                 "error_code": 500,
