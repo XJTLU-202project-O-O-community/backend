@@ -367,11 +367,7 @@ def edit(request):
 @require_http_methods(["POST"])
 def change_pwd(request):
     username = request.user.name
-    email = request.POST.get("email")
-    given_verification = request.POST.get("given_verification")
-    old_password = request.POST.get("old_password")
     new_password = request.POST.get("new_password")
-    code = request.session.get("code")
     try:
         if len(request.session.items()) == 0:
             err_code = 401
@@ -380,26 +376,16 @@ def change_pwd(request):
                 "msg": "session expired",
             }
             return JsonResponse(result, status=200)
-        # 核对旧密码
-        if request.user.check_password(old_password) and email == request.user.email and given_verification == code:
-            request.user.set_password(new_password)
-            personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
-            err_code = 200
-            result = {
-                'error_code': err_code,
-                "msg": "修改密码成功",
-                "data": json.loads(personal_info),
-            }
-            request.session.flush()
-            # return JsonResponse(result, status=err_code)
-
-        else:
-            err_code = 400
-            result = {
-                "error_code": err_code,
-                "msg": "修改失败，原参数不匹配",
-            }
-            # return JsonResponse(result, status=err_code)
+        request.user.set_password(new_password)
+        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
+        err_code = 200
+        result = {
+            'error_code': err_code,
+            "msg": "修改密码成功",
+            "data": json.loads(personal_info),
+        }
+        #request.session.flush()
+        # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
         return HttpResponse(str(e), status=200)
