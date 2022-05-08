@@ -111,7 +111,7 @@ def following(request):
                 result = {
                     "error_code": 200,
                     "msg": "user_" + str(user_id) + ' follows user_' + str(
-                        following_id) + " successfully in Group id " + group_id
+                        following_id) + " successfully in Group id " + str(group_id)
                 }
             return JsonResponse(result, status=200)
         except Exception as e:
