@@ -70,6 +70,7 @@ def following(request):
 
     elif request.method == 'POST':
         request_body = json.loads(request.body)
+        # request_body = request.POST
         user_id = request_body.get("user_id")
         following_id = request_body.get("following_id")
         group_id = request_body.get("group_id")
@@ -87,6 +88,7 @@ def following(request):
                 "error_code": 400,
                 "msg": "The group id %s does not exist." % group_id,
             }
+            return JsonResponse(result, status=200)
         except Exception as e:
             print(e)
             result = {
