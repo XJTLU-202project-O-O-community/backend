@@ -1,5 +1,4 @@
 import json
-
 import django
 from django.db.models import Q, F
 from django.http import JsonResponse
@@ -76,7 +75,7 @@ def following(request):
         group_id = request_body.get("group_id")
         try:
             if group_id:
-                if not Group.objects.get(id=group_id).user_id == user_id:
+                if not str(Group.objects.get(id=group_id).user_id) == str(user_id):
                     result = {
                         "error_code": 204,
                         "msg": 'do not have sufficient permission'
