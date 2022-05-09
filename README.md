@@ -1,4 +1,4 @@
-# ChatApp  #
+# O&O community  #
 
 
 ## Architecture ##

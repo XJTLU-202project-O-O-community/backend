@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'oo_community',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': 3306,
     }
@@ -163,8 +163,7 @@ EMAIL_HOST_USER = '1076627773@qq.com'    #发送邮件的邮箱地址
 EMAIL_HOST_PASSWORD = 'fkzagikokuffghha'         #发送邮件的邮箱密码(这里使用的是授权码)
 
 
-SESSION_COOKIE_AGE = 60 * 10 # 10分钟
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 90 # 3个月
 SESSION_SAVE_EVERY_REQUEST = True  # 每次请求会更新sessions有效期限
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 关闭浏览器，则COOKIE失效
-
 

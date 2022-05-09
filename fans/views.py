@@ -1,5 +1,4 @@
 import json
-
 import django
 from django.db.models import Q, F
 from django.http import JsonResponse
@@ -71,12 +70,13 @@ def following(request):
 
     elif request.method == 'POST':
         request_body = json.loads(request.body)
+        # request_body = request.POST
         user_id = request_body.get("user_id")
         following_id = request_body.get("following_id")
         group_id = request_body.get("group_id")
         try:
             if group_id:
-                if not Group.objects.get(id=group_id).user_id == user_id:
+                if not str(Group.objects.get(id=group_id).user_id) == str(user_id):
                     result = {
                         "error_code": 204,
                         "msg": 'do not have sufficient permission'
@@ -88,6 +88,7 @@ def following(request):
                 "error_code": 400,
                 "msg": "The group id %s does not exist." % group_id,
             }
+            return JsonResponse(result, status=200)
         except Exception as e:
             print(e)
             result = {
@@ -110,7 +111,7 @@ def following(request):
                 result = {
                     "error_code": 200,
                     "msg": "user_" + str(user_id) + ' follows user_' + str(
-                        following_id) + " successfully in Group id " + group_id
+                        following_id) + " successfully in Group id " + str(group_id)
                 }
             return JsonResponse(result, status=200)
         except Exception as e:
