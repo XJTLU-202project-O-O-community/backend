@@ -293,15 +293,15 @@ def edit(request):
                 "msg": "session expired",
             }
             return JsonResponse(result, status=200)
-        old_username = request.user.name
-        old_info = UserProfile.objects.get(name=old_username)
+        old_userid = request.user.id
+        old_info = UserProfile.objects.get(id=old_userid)
+        print(old_info)
+
         # 修改用户名
         new_username = request.POST.get("new_username")
         if new_username is not None:
             old_info.name = new_username
-            username = new_username
-        else:
-            username = old_username
+        print(old_info.name)
         # 修改头像
         photo_name = request.POST.get('photo')
         print("photo")
@@ -314,6 +314,7 @@ def edit(request):
                     if old_info.photo != '':
                         os.remove('./media/'+str(old_info.photo))
                 old_info.photo = "photo/" + photo_name
+        print(old_info.photo)
 
         # 修改背景
         background_name = request.POST.get('background')
@@ -343,10 +344,14 @@ def edit(request):
 
         # 修改个签
         signature = request.POST.get('signature')
-        old_info.signature = signature
+        if signature != "undefined":
+            old_info.signature = signature
         old_info.save()
+
+        UserProfile.objects.filter(id=old_userid).update(name=old_info.name)
         # 发回修改后信息
-        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
+        personal_info = serializers.serialize('json', UserProfile.objects.filter(id=old_userid))
+        print(personal_info)
         err_code = 200
         result = {
             'error_code': err_code,
