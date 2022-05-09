@@ -154,7 +154,6 @@ def regist(request):
                 "msg": "创建失败"
             }
 
-
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
@@ -296,7 +295,6 @@ def edit(request):
             return JsonResponse(result, status=200)
         old_username = request.user.name
         old_info = UserProfile.objects.get(name=old_username)
-
         # 修改用户名
         new_username = request.POST.get("new_username")
         if new_username is not None:
@@ -306,11 +304,13 @@ def edit(request):
             username = old_username
         # 修改头像
         photo_name = request.POST.get('photo')
-        if photo_name is not None:
-            if old_info.photo != "photo/default.jpg":
-                os.remove('./media/'+str(old_info.photo))
-            old_info.photo = "photo/" + photo_name
-
+        print("photo")
+        print(type(photo_name))
+        if photo_name != '':
+            if photo_name is not None:
+                if old_info.photo != "photo/default.jpg":
+                    os.remove('./media/'+str(old_info.photo))
+                old_info.photo = "photo/" + photo_name
 
         # 修改背景
         background_name = request.POST.get('background')
@@ -342,6 +342,7 @@ def edit(request):
         signature = request.POST.get('signature')
         old_info.signature = signature
         old_info.save()
+        print("aaaaaaa")
         # 发回修改后信息
         personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
@@ -354,12 +355,14 @@ def edit(request):
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
 
+
     except Exception as e:
         err_code = 500
         result = {
             'error_code': err_code,
             "msg": str(e)
         }
+        print(str(e))
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
 
@@ -384,7 +387,7 @@ def change_pwd(request):
             "msg": "修改密码成功",
             "data": json.loads(personal_info),
         }
-        #request.session.flush()
+        # request.session.flush()
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
@@ -483,4 +486,3 @@ def img_uploader(request):
         }
         # return JsonResponse(result, status=500)
         return JsonResponse(result, status=200)
-
