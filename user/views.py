@@ -305,11 +305,14 @@ def edit(request):
         # 修改头像
         photo_name = request.POST.get('photo')
         print("photo")
-        print(type(photo_name))
-        if photo_name != '':
+        print("photo/" + photo_name)
+        print(old_info.photo)
+        if photo_name != '' and "photo/" + photo_name != old_info.photo:
             if photo_name is not None:
                 if old_info.photo != "photo/default.jpg":
-                    os.remove('./media/'+str(old_info.photo))
+                    print("inside")
+                    if old_info.photo != '':
+                        os.remove('./media/'+str(old_info.photo))
                 old_info.photo = "photo/" + photo_name
 
         # 修改背景
@@ -342,7 +345,6 @@ def edit(request):
         signature = request.POST.get('signature')
         old_info.signature = signature
         old_info.save()
-        print("aaaaaaa")
         # 发回修改后信息
         personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
         err_code = 200
@@ -354,7 +356,6 @@ def edit(request):
 
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
-
 
     except Exception as e:
         err_code = 500
