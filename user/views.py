@@ -305,10 +305,9 @@ def edit(request):
         # 修改头像
         photo_name = request.POST.get('photo')
         print("photo")
-        print("photo/" + photo_name)
         print(old_info.photo)
-        if photo_name != '' and "photo/" + photo_name != old_info.photo:
-            if photo_name is not None:
+        if photo_name is not None:
+            if photo_name != '' and "photo/" + photo_name != old_info.photo:
                 if old_info.photo != "photo/default.jpg":
                     print("inside")
                     if old_info.photo != '':
