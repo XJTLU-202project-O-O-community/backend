@@ -65,6 +65,7 @@ def single_post(request):
             print(request.POST)
             user_id = request.POST.get("user_id")
             content = request.POST.get("content")
+            print(content)
             imgList = request.POST.get("imglist")
             print(user_id,content,imgList)
             if content=="undefined":

@@ -27,6 +27,7 @@ def inlog(request):
     print(request.POST)
     email = request.POST.get("email")  # 获取用户名
     password = request.POST.get("password")  # 获取用户的密码
+
     user = authenticate(username=email, password=password)  # 验证用户名和密码，返回用户对象
     if user:  # 如果用户对象存在
         login(request, user)  # 用户登陆
@@ -154,7 +155,6 @@ def regist(request):
                 "msg": "创建失败"
             }
 
-
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
@@ -239,9 +239,11 @@ def personal_page(request):
                          "personal_data": json.loads(his_json_info)
                          }
             }
+            print(result)
             # return JsonResponse(result, status=err_code)
             return JsonResponse(result, status=200)
         except Exception as e:
+            print(e)
             err_code = 500
             result = {
                 "error_code": err_code,
@@ -287,14 +289,14 @@ def edit(request):
     print(request.POST)
     # 利用old_username获取数据库中信息
     try:
-        # if len(request.session.items()) == 0:
-        #     err_code = 401
-        #     result = {
-        #         "error_code": err_code,
-        #         "msg": "session expired",
-        #     }
-        #     return JsonResponse(result, status=200)
-        old_userid = request.POST.get('user_id')
+        if len(request.session.items()) == 0:
+            err_code = 401
+            result = {
+                "error_code": err_code,
+                "msg": "session expired",
+            }
+            return JsonResponse(result, status=200)
+        old_userid = request.user.id
         old_info = UserProfile.objects.get(id=old_userid)
         print(old_info)
 
@@ -302,22 +304,19 @@ def edit(request):
         new_username = request.POST.get("new_username")
         if new_username is not None:
             old_info.name = new_username
-            username = new_username
         print(old_info.name)
         # 修改头像
         photo_name = request.POST.get('photo')
-        print(photo_name,len(photo_name))
-        if len(photo_name)!=0:
-            if old_info.photo != "photo/default.jpg":
-                try:
-                   os.remove('./media/'+str(old_info.photo))
-                except Exception as e:
-                    print(e)
-                old_info.photo = "photo/" + photo_name
-
+        print("photo")
         print(old_info.photo)
-
-
+        if photo_name is not None:
+            if photo_name != '' and "photo/" + photo_name != old_info.photo:
+                if old_info.photo != "photo/default.jpg":
+                    print("inside")
+                    if old_info.photo != '':
+                        os.remove('./media/' + str(old_info.photo))
+                old_info.photo = "photo/" + photo_name
+        print(old_info.photo)
 
         # 修改背景
         background_name = request.POST.get('background')
@@ -347,7 +346,7 @@ def edit(request):
 
         # 修改个签
         signature = request.POST.get('signature')
-        if signature != "undefined":
+        if signature is not None:
             old_info.signature = signature
         old_info.save()
 
@@ -371,6 +370,7 @@ def edit(request):
             'error_code': err_code,
             "msg": str(e)
         }
+        print(str(e))
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
 
@@ -395,7 +395,7 @@ def change_pwd(request):
             "msg": "修改密码成功",
             "data": json.loads(personal_info),
         }
-        #request.session.flush()
+        # request.session.flush()
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
@@ -494,4 +494,3 @@ def img_uploader(request):
         }
         # return JsonResponse(result, status=500)
         return JsonResponse(result, status=200)
-
