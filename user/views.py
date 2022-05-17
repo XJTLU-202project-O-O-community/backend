@@ -27,6 +27,7 @@ def inlog(request):
     print(request.POST)
     email = request.POST.get("email")  # 获取用户名
     password = request.POST.get("password")  # 获取用户的密码
+
     user = authenticate(username=email, password=password)  # 验证用户名和密码，返回用户对象
     if user:  # 如果用户对象存在
         login(request, user)  # 用户登陆
@@ -238,9 +239,11 @@ def personal_page(request):
                          "personal_data": json.loads(his_json_info)
                          }
             }
+            print(result)
             # return JsonResponse(result, status=err_code)
             return JsonResponse(result, status=200)
         except Exception as e:
+            print(e)
             err_code = 500
             result = {
                 "error_code": err_code,
@@ -311,7 +314,7 @@ def edit(request):
                 if old_info.photo != "photo/default.jpg":
                     print("inside")
                     if old_info.photo != '':
-                        os.remove('./media/'+str(old_info.photo))
+                        os.remove('./media/' + str(old_info.photo))
                 old_info.photo = "photo/" + photo_name
         print(old_info.photo)
 
@@ -343,7 +346,7 @@ def edit(request):
 
         # 修改个签
         signature = request.POST.get('signature')
-        if signature != "undefined":
+        if signature is not None:
             old_info.signature = signature
         old_info.save()
 

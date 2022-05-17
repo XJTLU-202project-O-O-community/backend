@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d968b48a-0c13-42af-8560-a0f2beb2b61e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/moments/20160729_040022.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/moments/_DSC0642.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/photo/_DSC0635.JPG" afterDir="false" />
+    <list default="true" id="2008655d-23bc-44f6-9326-023ce1e4a4e0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/media/moments/Done.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/moments/坠落.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/moments/夜空.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/moments/森林.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/moments/风景.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/moments/黑心.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/坠落.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/森林.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/photo/黑心.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_2_03__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_2_05__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_下午2_03_[Changes]/img.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_下午2_03_[Changes]/img_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_下午2_03_[Changes]/img_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_下午2_03_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_4_2022_下午2_05_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +34,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2966jHASD6Mj2S0ZVJ0XWHc7OUa" />
+  <component name="ProjectId" id="29HGG9F1LaEmaJ4b4mJVrR0BkLy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -82,16 +78,39 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d968b48a-0c13-42af-8560-a0f2beb2b61e" name="Changes" comment="" />
-      <created>1652421324790</created>
+      <changelist id="2008655d-23bc-44f6-9326-023ce1e4a4e0" name="Changes" comment="" />
+      <created>1652762502171</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1652421324790</updated>
-      <workItem from="1652421327571" duration="1958000" />
+      <updated>1652762502171</updated>
+      <workItem from="1652762504685" duration="907000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
