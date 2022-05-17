@@ -154,7 +154,6 @@ def regist(request):
                 "msg": "创建失败"
             }
 
-
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
@@ -294,23 +293,27 @@ def edit(request):
                 "msg": "session expired",
             }
             return JsonResponse(result, status=200)
-        old_username = request.user.name
-        old_info = UserProfile.objects.get(name=old_username)
+        old_userid = request.user.id
+        old_info = UserProfile.objects.get(id=old_userid)
+        print(old_info)
 
         # 修改用户名
         new_username = request.POST.get("new_username")
         if new_username is not None:
             old_info.name = new_username
-            username = new_username
-        else:
-            username = old_username
+        print(old_info.name)
         # 修改头像
         photo_name = request.POST.get('photo')
+        print("photo")
+        print(old_info.photo)
         if photo_name is not None:
-            if old_info.photo != "photo/default.jpg":
-                os.remove('./media/'+str(old_info.photo))
-            old_info.photo = "photo/" + photo_name
-
+            if photo_name != '' and "photo/" + photo_name != old_info.photo:
+                if old_info.photo != "photo/default.jpg":
+                    print("inside")
+                    if old_info.photo != '':
+                        os.remove('./media/'+str(old_info.photo))
+                old_info.photo = "photo/" + photo_name
+        print(old_info.photo)
 
         # 修改背景
         background_name = request.POST.get('background')
@@ -340,10 +343,14 @@ def edit(request):
 
         # 修改个签
         signature = request.POST.get('signature')
-        old_info.signature = signature
+        if signature != "undefined":
+            old_info.signature = signature
         old_info.save()
+
+        UserProfile.objects.filter(id=old_userid).update(name=old_info.name)
         # 发回修改后信息
-        personal_info = serializers.serialize('json', UserProfile.objects.filter(name=username))
+        personal_info = serializers.serialize('json', UserProfile.objects.filter(id=old_userid))
+        print(personal_info)
         err_code = 200
         result = {
             'error_code': err_code,
@@ -360,6 +367,7 @@ def edit(request):
             'error_code': err_code,
             "msg": str(e)
         }
+        print(str(e))
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
 
@@ -384,7 +392,7 @@ def change_pwd(request):
             "msg": "修改密码成功",
             "data": json.loads(personal_info),
         }
-        #request.session.flush()
+        # request.session.flush()
         # return JsonResponse(result, status=err_code)
         return JsonResponse(result, status=200)
     except Exception as e:
@@ -483,4 +491,3 @@ def img_uploader(request):
         }
         # return JsonResponse(result, status=500)
         return JsonResponse(result, status=200)
-
