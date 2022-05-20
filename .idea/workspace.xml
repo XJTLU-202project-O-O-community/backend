@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2008655d-23bc-44f6-9326-023ce1e4a4e0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/moments/Done.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/moments/坠落.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/moments/夜空.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/moments/森林.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/moments/风景.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/moments/黑心.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/photo/坠落.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/photo/森林.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/photo/黑心.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/62561e85-fa98-45f5-b666-3bf7730cefdf.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652762502171</updated>
-      <workItem from="1652762504685" duration="907000" />
+      <workItem from="1652762504685" duration="4310000" />
     </task>
     <servers />
   </component>
